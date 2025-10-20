@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Waste Bin Optimization</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .container { display: flex; height: calc(100vh - 60px); }
+    .sidebar { width: 300px; background: #f4f4f4; padding: 10px; overflow-y: auto; }
+    .tabs { display: flex; flex-direction: column; }
+    .tab-button { padding: 10px; margin: 2px 0; border: none; background: #ddd; cursor: pointer; }
+    .tab-button.active { background: #bbb; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    #map { flex: 1; }
+    .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
+    .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; }
+    .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+    .close:hover { color: black; }
+    form { display: flex; flex-direction: column; }
+    label { margin-top: 10px; }
+    input, select { padding: 5px; margin-top: 5px; }
+    button { margin-top: 10px; padding: 10px; }
+    .list-item { border: 1px solid #ccc; margin: 5px 0; padding: 5px; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Smart Waste Bin Optimization System</h1>
+  </header>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="tabs">
+        <button class="tab-button active" data-tab="households">Households</button>
+        <button class="tab-button" data-tab="bins">Bins</button>
+        <button class="tab-button" data-tab="users">Users</button>
+        <button class="tab-button" data-tab="vehicles">Vehicles</button>
+        <button class="tab-button" data-tab="collections">Collections</button>
+        <button class="tab-button" data-tab="sensors">Sensors</button>
+        <button class="tab-button" data-tab="maintenance">Maintenance</button>
+        <button class="tab-button" data-tab="routes">Routes</button>
+        <button class="tab-button" data-tab="waste-types">Waste Types</button>
+        <button class="tab-button" data-tab="assignments">Assignments</button>
+        <button class="tab-button" data-tab="analysis">Analysis</button>
+      </div>
+      <div class="tab-content">
+        <div id="households-tab" class="tab-panel active">
+          <button id="loadHouseholds">Load Households</button>
+          <button id="addHouseholdBtn">Add Household</button>
+          <div id="households-list"></div>
+        </div>
+        <div id="bins-tab" class="tab-panel">
+          <button id="loadBins">Load Bins</button>
+          <button id="addBinBtn">Add Bin</button>
+          <div id="bins-list"></div>
+        </div>
+        <div id="users-tab" class="tab-panel">
+          <button id="loadUsers">Load Users</button>
+          <button id="addUserBtn">Add User</button>
+          <div id="users-list"></div>
+        </div>
+        <div id="vehicles-tab" class="tab-panel">
+          <button id="loadVehicles">Load Vehicles</button>
+          <button id="addVehicleBtn">Add Vehicle</button>
+          <div id="vehicles-list"></div>
+        </div>
+        <div id="collections-tab" class="tab-panel">
+          <button id="loadCollections">Load Collections</button>
+          <button id="addCollectionBtn">Add Collection</button>
+          <div id="collections-list"></div>
+        </div>
+        <div id="sensors-tab" class="tab-panel">
+          <button id="loadSensors">Load Sensors</button>
+          <button id="addSensorBtn">Add Sensor</button>
+          <div id="sensors-list"></div>
+        </div>
+        <div id="maintenance-tab" class="tab-panel">
+          <button id="loadMaintenance">Load Maintenance</button>
+          <button id="addMaintenanceBtn">Add Maintenance</button>
+          <div id="maintenance-list"></div>
+        </div>
+        <div id="routes-tab" class="tab-panel">
+          <button id="loadRoutes">Load Routes</button>
+          <button id="addRouteBtn">Add Route</button>
+          <div id="routes-list"></div>
+        </div>
+        <div id="waste-types-tab" class="tab-panel">
+          <button id="loadWasteTypes">Load Waste Types</button>
+          <button id="addWasteTypeBtn">Add Waste Type</button>
+          <div id="waste-types-list"></div>
+        </div>
+        <div id="assignments-tab" class="tab-panel">
+          <button id="loadAssignments">Load Assignments</button>
+          <button id="addAssignmentBtn">Add Assignment</button>
+          <div id="assignments-list"></div>
+        </div>
+        <div id="analysis-tab" class="tab-panel">
+          <button id="findFar">Find Far Households</button>
+          <button id="suggestBins">Suggest New Bin Locations</button>
+        </div>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- Modals for forms -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- API + Map Scripts -->
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/map.js"></script>
+  <script type="module" src="js/ui.js"></script>
+</body>
+</html>
