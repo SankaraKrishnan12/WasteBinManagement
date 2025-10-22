@@ -2,20 +2,15 @@ import {
   getHouseholds,
   getBins,
   getFarHouseholds,
-  suggestBins,
-  getUsers,
-  getVehicles,
-  getCollections,
-  getSensors,
-  getMaintenance,
-  getRoutes,
-  getWasteTypes,
-  getAssignments,
   getSuggestedBins,
+  // These imports are no longer needed here, but in ui.js
+  // getUsers,
+  // getVehicles,
+  // ...etc
 } from "./api.js";
 
-// Initialize map
-const map = L.map("map").setView([13.0827, 80.2707], 14);
+// Initialize map and EXPORT it so ui.js can use it
+export const map = L.map("map").setView([13.0827, 80.2707], 14);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap contributors",
@@ -43,23 +38,37 @@ async function loadData() {
   const [households, bins] = await Promise.all([getHouseholds(), getBins()]);
 
   households.forEach((h) => {
-    const { coordinates } = JSON.parse(h.location);
-    const marker = L.circleMarker([coordinates[1], coordinates[0]], {
-      color: "blue",
-      radius: 5,
-    }).bindPopup(`<b>House:</b> ${h.name}<br><b>Ward:</b> ${h.ward}`);
-    marker.addTo(map);
-    markers.households.push(marker);
+    // Check if location exists and is valid JSON
+    if (h.location) {
+      try {
+        const { coordinates } = JSON.parse(h.location);
+        const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+          color: "blue",
+          radius: 5,
+        }).bindPopup(`<b>House:</b> ${h.name}<br><b>Ward:</b> ${h.ward}`);
+        marker.addTo(map);
+        markers.households.push(marker);
+      } catch (e) {
+        console.error("Invalid household location format:", h.location);
+      }
+    }
   });
 
   bins.forEach((b) => {
-    const { coordinates } = JSON.parse(b.location);
-    const marker = L.circleMarker([coordinates[1], coordinates[0]], {
-      color: "green",
-      radius: 7,
-    }).bindPopup(`<b>Bin:</b> ${b.id}<br>Capacity: ${b.capacity}`);
-    marker.addTo(map);
-    markers.bins.push(marker);
+    // Check if location exists and is valid JSON
+    if (b.location) {
+      try {
+        const { coordinates } = JSON.parse(b.location);
+        const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+          color: "green",
+          radius: 7,
+        }).bindPopup(`<b>Bin:</b> ${b.id}<br>Capacity: ${b.capacity}`);
+        marker.addTo(map);
+        markers.bins.push(marker);
+      } catch (e) {
+        console.error("Invalid bin location format:", b.location);
+      }
+    }
   });
 }
 
@@ -68,13 +77,19 @@ async function showFarHouseholds() {
   clearMarkers("farHouseholds");
   const far = await getFarHouseholds();
   far.forEach((h) => {
-    const { coordinates } = JSON.parse(h.location);
-    const marker = L.circleMarker([coordinates[1], coordinates[0]], {
-      color: "red",
-      radius: 6,
-    }).bindPopup(`<b>Far Household:</b> ${h.name}`);
-    marker.addTo(map);
-    markers.farHouseholds.push(marker);
+    if (h.location) {
+      try {
+        const { coordinates } = JSON.parse(h.location);
+        const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+          color: "red",
+          radius: 6,
+        }).bindPopup(`<b>Far Household:</b> ${h.name}`);
+        marker.addTo(map);
+        markers.farHouseholds.push(marker);
+      } catch (e) {
+        console.error("Invalid far household location:", h.location);
+      }
+    }
   });
 }
 
@@ -86,70 +101,67 @@ async function suggestNewBins() {
   suggestions.forEach((s) => {
     if (!s.location) return; // skip if location is null
 
-    const { coordinates } = JSON.parse(s.location);
-    const marker = L.marker([coordinates[1], coordinates[0]])
-      .addTo(map)
-      .bindPopup(`<b>Suggested Bin</b><br>Reason: ${s.reason}`);
-    markers.suggested.push(marker);
+    try {
+      const { coordinates } = JSON.parse(s.location);
+      const marker = L.marker([coordinates[1], coordinates[0]])
+        .addTo(map)
+        .bindPopup(`<b>Suggested Bin</b><br>Reason: ${s.reason}`);
+      markers.suggested.push(marker);
+    } catch (e) {
+      console.error("Invalid suggested bin location:", s.location);
+    }
   });
 }
 
-// -----------------------
-// Dynamic Add Bin Feature
-// -----------------------
-let addingBin = false;
+// --- NEW: Exportable function to add a single marker ---
+/**
+ * Adds a new marker to the map.
+ * @param {'household' | 'bin'} type The type of entity to add.
+ * @param {object} entity The entity object (must have lat, lng, name/id, etc.)
+ */
+export function addMapMarker(type, entity) {
+  let marker;
+  // Note: entity.lat and entity.lng come from the form's hidden fields
+  const lat = parseFloat(entity.lat);
+  const lng = parseFloat(entity.lng);
 
-function startAddingBin() {
-  addingBin = !addingBin;
-  alert(
-    addingBin
-      ? "Click on the map to add a new bin."
-      : "Bin adding canceled."
-  );
-}
-
-map.on("click", async (e) => {
-  if (!addingBin) return;
-
-  const { lat, lng } = e.latlng;
-
-  const capacity = prompt("Enter bin capacity (kg):", "100");
-  if (!capacity) return;
-
-  try {
-    const res = await fetch("http://localhost:5000/api/bins", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lat, lng, capacity: parseInt(capacity) }),
-    });
-    const newBin = await res.json();
-
-    // Add marker on map
-    const marker = L.circleMarker([lat, lng], {
-      color: "green",
-      radius: 7,
-    }).bindPopup(`<b>Bin:</b> ${newBin.id}<br>Capacity: ${newBin.capacity}`);
-    marker.addTo(map);
-    markers.bins.push(marker);
-
-    alert("Bin added successfully!");
-
-    // Optional: recalc far households automatically
-    showFarHouseholds();
-
-  } catch (err) {
-    console.error(err);
-    alert("Error adding bin.");
+  if (isNaN(lat) || isNaN(lng)) {
+    console.error("Invalid lat/lng for new marker:", entity);
+    return;
   }
 
-  addingBin = false; // Stop adding after one click
-});
+  if (type === 'household') {
+    marker = L.circleMarker([lat, lng], {
+      color: "blue",
+      radius: 5,
+    }).bindPopup(`<b>House:</b> ${entity.name}<br><b>Ward:</b> ${entity.ward}`);
+    marker.addTo(map);
+    markers.households.push(marker);
+  } else if (type === 'bin') {
+    marker = L.circleMarker([lat, lng], {
+      color: "green",
+      radius: 7,
+    }).bindPopup(`<b>Bin:</b> ${entity.id}<br>Capacity: ${entity.capacity}`);
+    marker.addTo(map);
+    markers.bins.push(marker);
+  }
+}
 
-// Export functions for use in other modules
+
+// -----------------------
+// REMOVED Dynamic Add Bin Feature
+// -----------------------
+// This logic is now handled entirely in ui.js
+// let addingBin = false;
+// function startAddingBin() { ... }
+// map.on("click", ...);
+
+
+// Export functions for use in ui.js
 window.loadData = loadData;
 window.showFarHouseholds = showFarHouseholds;
 window.suggestNewBins = suggestNewBins;
-window.startAddingBin = startAddingBin;
+// window.startAddingBin = startAddingBin; // REMOVED
 
 // Initial load
 loadData();

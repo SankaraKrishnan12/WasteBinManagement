@@ -4,7 +4,7 @@ import pool from '../config/db.js';
 export const listBins = async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id, capacity, last_collected, ST_AsGeoJSON(location) AS location FROM bins"
+      "SELECT id, capacity, last_collected, fill_level, status, ST_AsGeoJSON(location) AS location FROM bins ORDER BY id"
     );
     res.json(result.rows);
   } catch (err) {
@@ -18,7 +18,7 @@ export const getBin = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
-      "SELECT id, capacity, last_collected, ST_AsGeoJSON(location) AS location FROM bins WHERE id=$1",
+      "SELECT id, capacity, last_collected, fill_level, status, ST_AsGeoJSON(location) AS location FROM bins WHERE id=$1",
       [id]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Bin not found' });
@@ -32,10 +32,13 @@ export const getBin = async (req, res) => {
 // POST create new bin
 export const createBin = async (req, res) => {
   try {
-    const { lat, lng, capacity } = req.body;
+    const { lat, lng, capacity, fill_level, status } = req.body;
+    
     const result = await pool.query(
-      "INSERT INTO bins (capacity, last_collected, location) VALUES ($1, CURRENT_DATE, ST_SetSRID(ST_Point($2, $3), 4326)::geography) RETURNING id, capacity, last_collected, ST_AsGeoJSON(location) AS location",
-      [capacity, lng, lat] // lng first, lat second
+      `INSERT INTO bins (capacity, last_collected, location, fill_level, status) 
+       VALUES ($1, CURRENT_DATE, ST_SetSRID(ST_Point($2, $3), 4326)::geography, $4, $5) 
+       RETURNING id, capacity, last_collected, fill_level, status, ST_AsGeoJSON(location) AS location`,
+      [capacity, lng, lat, fill_level || 0, status || 'active']
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -48,14 +51,21 @@ export const createBin = async (req, res) => {
 export const updateBin = async (req, res) => {
   try {
     const { id } = req.params;
-    const { lat, lng, capacity } = req.body;
+    const { lat, lng, capacity, fill_level, status } = req.body;
+    
     const result = await pool.query(
-      "UPDATE bins SET capacity=$1, location=ST_SetSRID(ST_Point($2,$3),4326)::geography WHERE id=$4 RETURNING id, capacity, last_collected, ST_AsGeoJSON(location) AS location",
-      [capacity, lng, lat, id]
+      `UPDATE bins SET 
+         capacity=$1, 
+         location=ST_SetSRID(ST_Point($2,$3),4326)::geography, 
+         fill_level=$4, 
+         status=$5 
+       WHERE id=$6 
+       RETURNING id, capacity, last_collected, fill_level, status, ST_AsGeoJSON(location) AS location`,
+      [capacity, lng, lat, fill_level, status, id] // Add new fields
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Bin not found' });
     res.json(result.rows[0]);
-  } catch (err) {
+  } catch (err){
     console.error(err);
     res.status(500).json({ error: 'Database error' });
   }
