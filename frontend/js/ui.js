@@ -2,7 +2,9 @@
 
 import {
   getHouseholds,
+  createHousehold, // IMPORTED
   getBins,
+  createBin,       // IMPORTED
   getUsers,
   getVehicles,
   getCollections,
@@ -14,6 +16,12 @@ import {
   getFarHouseholds,
   getSuggestedBins,
 } from './api.js';
+
+// Import map instance and marker function from map.js
+import { map, addMapMarker } from './map.js';
+
+// Global state to track what we are adding
+window.currentAddMode = null;
 
 // Tab management
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,13 +45,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closeBtn.onclick = () => {
     modal.style.display = 'none';
+    window.currentAddMode = null; // Cancel adding if modal is closed
   };
 
   window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
+      window.currentAddMode = null; // Cancel adding if modal is closed
     }
   };
+
+  // --- Map click handler ---
+  map.on("click", (e) => {
+    // Do nothing if we're not in an "add" mode
+    if (!window.currentAddMode) return;
+
+    const { lat, lng } = e.latlng;
+
+    // Open the correct modal based on the mode
+    if (window.currentAddMode === 'household') {
+      openHouseholdModal(lat, lng);
+    } else if (window.currentAddMode === 'bin') {
+      openBinModal(lat, lng);
+    }
+    
+    // Reset the mode so the next click doesn't re-trigger
+    window.currentAddMode = null;
+  });
+
 
   // Load initial data
   loadHouseholds();
@@ -57,7 +86,7 @@ function showModal(content) {
   document.getElementById('modal').style.display = 'block';
 }
 
-function createForm(fields, onSubmit) {
+function createForm(fields, onSubmit, hiddenData = {}) {
   let formHtml = '<form id="entity-form">';
   fields.forEach(field => {
     formHtml += `<label>${field.label}:</label>`;
@@ -71,6 +100,12 @@ function createForm(fields, onSubmit) {
       formHtml += `<input type="${field.type}" name="${field.name}" ${field.required ? 'required' : ''}>`;
     }
   });
+
+  // Add hidden fields for data like lat/lng
+  for (const [key, value] of Object.entries(hiddenData)) {
+    formHtml += `<input type="hidden" name="${key}" value="${value}">`;
+  }
+
   formHtml += '<button type="submit">Submit</button></form>';
   return formHtml;
 }
@@ -100,48 +135,65 @@ async function loadHouseholds() {
       { name: 'name', label: 'Name' },
       { name: 'ward', label: 'Ward' },
       { name: 'waste_generated_per_day', label: 'Waste/Day' }
-    ], editHousehold, deleteHousehold);
+    ], 'editHousehold', 'deleteHousehold'); // Pass function names as strings
   } catch (error) {
     console.error('Error loading households:', error);
   }
 }
 
 function addHousehold() {
+  window.currentAddMode = 'household';
+  alert('Click on the map to place the new household.');
+}
+
+function openHouseholdModal(lat, lng) {
   const formHtml = createForm([
     { name: 'name', label: 'Name', type: 'text', required: true },
     { name: 'ward', label: 'Ward', type: 'text', required: true },
-    { name: 'waste_generated_per_day', label: 'Waste Generated per Day', type: 'number', required: true },
+    { name: 'waste_generated_per_day', label: 'Waste Generated per Day', type: 'number', required: true, step: '0.1' }, // Added step for floats
     { name: 'contact_info', label: 'Contact Info', type: 'text' },
     { name: 'household_type', label: 'Type', type: 'select', options: [
       { value: 'residential', label: 'Residential' },
       { value: 'commercial', label: 'Commercial' },
       { value: 'industrial', label: 'Industrial' }
     ]},
-    { name: 'lat', label: 'Latitude', type: 'number', required: true },
-    { name: 'lng', label: 'Longitude', type: 'number', required: true }
-  ], submitHouseholdForm);
+  ], submitHouseholdForm, { lat, lng }); // Pass lat/lng as hidden data
+  
   showModal(formHtml);
   document.getElementById('entity-form').addEventListener('submit', submitHouseholdForm);
 }
 
+// CORRECTED: This function now passes the flat data object
 async function submitHouseholdForm(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
-  const data = Object.fromEntries(formData);
-  // Submit to API
-  console.log('Submitting household:', data);
-  // Close modal and reload
-  document.getElementById('modal').style.display = 'none';
-  loadHouseholds();
+  const data = Object.fromEntries(formData); // data contains { name, ward, lat, lng, ... }
+  
+  try {
+    // 1. Submit to API
+    console.log('Submitting household:', data);
+    // createHousehold now handles parsing
+    const newHousehold = await createHousehold(data); 
+    console.log('Saved household:', newHousehold);
+    alert('Household saved successfully!');
+
+    // 2. Add the marker to the map
+    // The flat 'data' object has lat/lng, and newHousehold has the ID
+    const markerData = { ...newHousehold, ...data };
+    addMapMarker('household', markerData);
+
+    // 3. Close modal and reload list
+    document.getElementById('modal').style.display = 'none';
+    loadHouseholds(); // Reload the list to show the new item
+
+  } catch (err) {
+    console.error('Error saving household:', err);
+    alert(`Error saving household: ${err.message}`);
+  }
 }
 
-function editHousehold(id) {
-  console.log('Edit household:', id);
-}
-
-function deleteHousehold(id) {
-  console.log('Delete household:', id);
-}
+window.editHousehold = (id) => console.log('Edit household:', id);
+window.deleteHousehold = (id) => console.log('Delete household:', id);
 
 // Bins
 async function loadBins() {
@@ -152,13 +204,18 @@ async function loadBins() {
       { name: 'capacity', label: 'Capacity' },
       { name: 'fill_level', label: 'Fill Level' },
       { name: 'status', label: 'Status' }
-    ], editBin, deleteBin);
+    ], 'editBin', 'deleteBin'); // Pass function names as strings
   } catch (error) {
     console.error('Error loading bins:', error);
   }
 }
 
 function addBin() {
+  window.currentAddMode = 'bin';
+  alert('Click on the map to place the new bin.');
+}
+
+function openBinModal(lat, lng) {
   const formHtml = createForm([
     { name: 'capacity', label: 'Capacity', type: 'number', required: true },
     { name: 'bin_type', label: 'Type', type: 'select', options: [
@@ -166,29 +223,48 @@ function addBin() {
       { value: 'large', label: 'Large' },
       { value: 'small', label: 'Small' }
     ]},
-    { name: 'lat', label: 'Latitude', type: 'number', required: true },
-    { name: 'lng', label: 'Longitude', type: 'number', required: true }
-  ], submitBinForm);
+    // Other fields from your model can be added here
+    // { name: 'fill_level', label: 'Initial Fill Level', type: 'number' },
+    // { name: 'status', label: 'Status', type: 'text' }
+  ], submitBinForm, { lat, lng }); // Pass lat/lng as hidden data
+  
   showModal(formHtml);
   document.getElementById('entity-form').addEventListener('submit', submitBinForm);
 }
 
+// CORRECTED: This function now passes the flat data object
 async function submitBinForm(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
-  const data = Object.fromEntries(formData);
-  console.log('Submitting bin:', data);
-  document.getElementById('modal').style.display = 'none';
-  loadBins();
+  const data = Object.fromEntries(formData); // data contains { capacity, bin_type, lat, lng }
+
+  try {
+    // 1. Submit to API
+    console.log('Submitting bin:', data);
+    // createBin now handles parsing
+    const newBin = await createBin(data); 
+    console.log('Saved bin:', newBin);
+    alert('Bin saved successfully!');
+
+    // 2. Add the marker to the map
+    // The flat 'data' object has lat/lng, and newBin has the ID
+    const markerData = { ...newBin, ...data };
+    addMapMarker('bin', markerData);
+
+    // 3. Close modal and reload list
+    document.getElementById('modal').style.display = 'none';
+    loadBins();
+
+  } catch (err) {
+    console.error('Error saving bin:', err);
+    alert(`Error saving bin: ${err.message}`);
+  }
 }
 
-function editBin(id) {
-  console.log('Edit bin:', id);
-}
+window.editBin = (id) => console.log('Edit bin:', id);
+window.deleteBin = (id) => console.log('Delete bin:', id);
 
-function deleteBin(id) {
-  console.log('Delete bin:', id);
-}
+// --- (The rest of the file for Users, Vehicles, etc. remains the same) ---
 
 // Users
 async function loadUsers() {
@@ -198,7 +274,7 @@ async function loadUsers() {
       { name: 'username', label: 'Username' },
       { name: 'email', label: 'Email' },
       { name: 'role', label: 'Role' }
-    ], editUser, deleteUser);
+    ], 'editUser', 'deleteUser');
   } catch (error) {
     console.error('Error loading users:', error);
   }
@@ -224,17 +300,13 @@ async function submitUserForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting user:', data);
+  // TODO: Add 'await createUser(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadUsers();
 }
 
-function editUser(id) {
-  console.log('Edit user:', id);
-}
-
-function deleteUser(id) {
-  console.log('Delete user:', id);
-}
+window.editUser = (id) => console.log('Edit user:', id);
+window.deleteUser = (id) => console.log('Delete user:', id);
 
 // Vehicles
 async function loadVehicles() {
@@ -245,7 +317,7 @@ async function loadVehicles() {
       { name: 'capacity', label: 'Capacity' },
       { name: 'vehicle_type', label: 'Type' },
       { name: 'status', label: 'Status' }
-    ], editVehicle, deleteVehicle);
+    ], 'editVehicle', 'deleteVehicle');
   } catch (error) {
     console.error('Error loading vehicles:', error);
   }
@@ -266,17 +338,13 @@ async function submitVehicleForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting vehicle:', data);
+  // TODO: Add 'await createVehicle(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadVehicles();
 }
 
-function editVehicle(id) {
-  console.log('Edit vehicle:', id);
-}
-
-function deleteVehicle(id) {
-  console.log('Delete vehicle:', id);
-}
+window.editVehicle = (id) => console.log('Edit vehicle:', id);
+window.deleteVehicle = (id) => console.log('Delete vehicle:', id);
 
 // Collections
 async function loadCollections() {
@@ -287,7 +355,7 @@ async function loadCollections() {
       { name: 'vehicle_id', label: 'Vehicle ID' },
       { name: 'waste_amount_collected', label: 'Waste Amount' },
       { name: 'collected_at', label: 'Collected At' }
-    ], editCollection, deleteCollection);
+    ], 'editCollection', 'deleteCollection');
   } catch (error) {
     console.error('Error loading collections:', error);
   }
@@ -310,17 +378,13 @@ async function submitCollectionForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting collection:', data);
+  // TODO: Add 'await createCollection(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadCollections();
 }
 
-function editCollection(id) {
-  console.log('Edit collection:', id);
-}
-
-function deleteCollection(id) {
-  console.log('Delete collection:', id);
-}
+window.editCollection = (id) => console.log('Edit collection:', id);
+window.deleteCollection = (id) => console.log('Delete collection:', id);
 
 // Sensors
 async function loadSensors() {
@@ -331,7 +395,7 @@ async function loadSensors() {
       { name: 'sensor_type', label: 'Type' },
       { name: 'last_reading', label: 'Last Reading' },
       { name: 'battery_level', label: 'Battery' }
-    ], editSensor, deleteSensor);
+    ], 'editSensor', 'deleteSensor');
   } catch (error) {
     console.error('Error loading sensors:', error);
   }
@@ -351,17 +415,13 @@ async function submitSensorForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting sensor:', data);
+  // TODO: Add 'await createSensor(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadSensors();
 }
 
-function editSensor(id) {
-  console.log('Edit sensor:', id);
-}
-
-function deleteSensor(id) {
-  console.log('Delete sensor:', id);
-}
+window.editSensor = (id) => console.log('Edit sensor:', id);
+window.deleteSensor = (id) => console.log('Delete sensor:', id);
 
 // Maintenance
 async function loadMaintenance() {
@@ -372,7 +432,7 @@ async function loadMaintenance() {
       { name: 'maintenance_type', label: 'Type' },
       { name: 'scheduled_date', label: 'Scheduled' },
       { name: 'status', label: 'Status' }
-    ], editMaintenance, deleteMaintenance);
+    ], 'editMaintenance', 'deleteMaintenance');
   } catch (error) {
     console.error('Error loading maintenance:', error);
   }
@@ -395,17 +455,13 @@ async function submitMaintenanceForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting maintenance:', data);
+  // TODO: Add 'await createMaintenance(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadMaintenance();
 }
 
-function editMaintenance(id) {
-  console.log('Edit maintenance:', id);
-}
-
-function deleteMaintenance(id) {
-  console.log('Delete maintenance:', id);
-}
+window.editMaintenance = (id) => console.log('Edit maintenance:', id);
+window.deleteMaintenance = (id) => console.log('Delete maintenance:', id);
 
 // Routes
 async function loadRoutes() {
@@ -415,7 +471,7 @@ async function loadRoutes() {
       { name: 'name', label: 'Name' },
       { name: 'description', label: 'Description' },
       { name: 'status', label: 'Status' }
-    ], editRoute, deleteRoute);
+    ], 'editRoute', 'deleteRoute');
   } catch (error) {
     console.error('Error loading routes:', error);
   }
@@ -435,17 +491,13 @@ async function submitRouteForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting route:', data);
+  // TODO: Add 'await createRoute(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadRoutes();
 }
 
-function editRoute(id) {
-  console.log('Edit route:', id);
-}
-
-function deleteRoute(id) {
-  console.log('Delete route:', id);
-}
+window.editRoute = (id) => console.log('Edit route:', id);
+window.deleteRoute = (id) => console.log('Delete route:', id);
 
 // Waste Types
 async function loadWasteTypes() {
@@ -455,7 +507,7 @@ async function loadWasteTypes() {
       { name: 'name', label: 'Name' },
       { name: 'description', label: 'Description' },
       { name: 'recyclable', label: 'Recyclable' }
-    ], editWasteType, deleteWasteType);
+    ], 'editWasteType', 'deleteWasteType');
   } catch (error) {
     console.error('Error loading waste types:', error);
   }
@@ -479,17 +531,13 @@ async function submitWasteTypeForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting waste type:', data);
+  // TODO: Add 'await createWasteType(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadWasteTypes();
 }
 
-function editWasteType(id) {
-  console.log('Edit waste type:', id);
-}
-
-function deleteWasteType(id) {
-  console.log('Delete waste type:', id);
-}
+window.editWasteType = (id) => console.log('Edit waste type:', id);
+window.deleteWasteType = (id) => console.log('Delete waste type:', id);
 
 // Assignments
 async function loadAssignments() {
@@ -499,7 +547,7 @@ async function loadAssignments() {
       { name: 'household_id', label: 'Household ID' },
       { name: 'bin_id', label: 'Bin ID' },
       { name: 'priority', label: 'Priority' }
-    ], editAssignment, deleteAssignment);
+    ], 'editAssignment', 'deleteAssignment');
   } catch (error) {
     console.error('Error loading assignments:', error);
   }
@@ -520,17 +568,13 @@ async function submitAssignmentForm(event) {
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
   console.log('Submitting assignment:', data);
+  // TODO: Add 'await createAssignment(data)' call here
   document.getElementById('modal').style.display = 'none';
   loadAssignments();
 }
 
-function editAssignment(id) {
-  console.log('Edit assignment:', id);
-}
-
-function deleteAssignment(id) {
-  console.log('Delete assignment:', id);
-}
+window.editAssignment = (id) => console.log('Edit assignment:', id);
+window.deleteAssignment = (id) => console.log('Delete assignment:', id);
 
 // Analysis functions
 async function findFarHouseholds() {
@@ -538,6 +582,7 @@ async function findFarHouseholds() {
     const farHouseholds = await getFarHouseholds();
     console.log('Far households:', farHouseholds);
     // Update map markers
+    window.showFarHouseholds();
   } catch (error) {
     console.error('Error finding far households:', error);
   }
@@ -548,6 +593,7 @@ async function suggestNewBins() {
     const suggestions = await getSuggestedBins();
     console.log('Suggested bins:', suggestions);
     // Update map markers
+    window.suggestNewBins();
   } catch (error) {
     console.error('Error suggesting bins:', error);
   }
@@ -578,15 +624,29 @@ document.getElementById('findFar').addEventListener('click', findFarHouseholds);
 document.getElementById('suggestBins').addEventListener('click', suggestNewBins);
 
 // Export functions for use in other modules
-window.loadHouseholds = loadHouseholds;
-window.loadBins = loadBins;
-window.loadUsers = loadUsers;
-window.loadVehicles = loadVehicles;
-window.loadCollections = loadCollections;
-window.loadSensors = loadSensors;
-window.loadMaintenance = loadMaintenance;
-window.loadRoutes = loadRoutes;
-window.loadWasteTypes = loadWasteTypes;
-window.loadAssignments = loadAssignments;
-window.findFarHouseholds = findFarHouseholds;
+window.loadData = loadData; // Keep for map.js
+window.showFarHouseholds = showFarHouseholds;
 window.suggestNewBins = suggestNewBins;
+
+// Make sure edit/delete stubs are globally accessible for inline onclick
+// (A better pattern would be to add event listeners in displayList, but this matches the original)
+window.editHousehold = (id) => console.log('Edit household:', id);
+window.deleteHousehold = (id) => console.log('Delete household:', id);
+window.editBin = (id) => console.log('Edit bin:', id);
+window.deleteBin = (id) => console.log('Delete bin:', id);
+window.editUser = (id) => console.log('Edit user:', id);
+window.deleteUser = (id) => console.log('Delete user:', id);
+window.editVehicle = (id) => console.log('Edit vehicle:', id);
+window.deleteVehicle = (id) => console.log('Delete vehicle:', id);
+window.editCollection = (id) => console.log('Edit collection:', id);
+window.deleteCollection = (id) => console.log('Delete collection:', id);
+window.editSensor = (id) => console.log('Edit sensor:', id);
+window.deleteSensor = (id) => console.log('Delete sensor:', id);
+window.editMaintenance = (id) => console.log('Edit maintenance:', id);
+window.deleteMaintenance = (id) => console.log('Delete maintenance:', id);
+window.editRoute = (id) => console.log('Edit route:', id);
+window.deleteRoute = (id) => console.log('Delete route:', id);
+window.editWasteType = (id) => console.log('Edit waste type:', id);
+window.deleteWasteType = (id) => console.log('Delete waste type:', id);
+window.editAssignment = (id) => console.log('Edit assignment:', id);
+window.deleteAssignment = (id) => console.log('Delete assignment:', id);

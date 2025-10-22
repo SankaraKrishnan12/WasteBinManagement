@@ -1,13 +1,55 @@
 const BASE_URL = "http://localhost:5000/api";
 
+// Helper function for POST requests
+async function postData(url = '', data = {}) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Server responded with ${response.status}`);
+  }
+  return response.json();
+}
+
 export async function getHouseholds() {
   const res = await fetch(`${BASE_URL}/households`);
   return res.json();
 }
 
+// Sends a flat object matching the model
+export async function createHousehold(householdData) {
+  // Data is already flat from the form.
+  // We just ensure the types are correct.
+  const dataToSave = {
+    ...householdData,
+    lat: parseFloat(householdData.lat),
+    lng: parseFloat(householdData.lng),
+    waste_generated_per_day: parseFloat(householdData.waste_generated_per_day)
+  };
+  return postData(`${BASE_URL}/households`, dataToSave);
+}
+
 export async function getBins() {
   const res = await fetch(`${BASE_URL}/bins`);
   return res.json();
+}
+
+// Sends a flat object matching the model
+export async function createBin(binData) {
+  // Data is already flat from the form.
+  // We just ensure the types are correct.
+  const dataToSave = {
+    ...binData,
+    lat: parseFloat(binData.lat),
+    lng: parseFloat(binData.lng),
+    capacity: parseInt(binData.capacity)
+  };
+  return postData(`${BASE_URL}/bins`, dataToSave);
 }
 
 export async function getFarHouseholds() {
