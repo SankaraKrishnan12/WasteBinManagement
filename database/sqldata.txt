@@ -1,0 +1,1038 @@
+-- -----------------------------
+-- Sample Users
+-- -----------------------------
+INSERT INTO users (username, email, password_hash, role)
+VALUES
+('admin1', 'admin@wastebin.com', '$2b$10$dummyhash', 'admin'),
+('collector1', 'collector1@wastebin.com', '$2b$10$dummyhash', 'collector'),
+('collector2', 'collector2@wastebin.com', '$2b$10$dummyhash', 'collector'),
+('manager1', 'manager@wastebin.com', '$2b$10$dummyhash', 'manager');
+INSERT INTO households (name, ward, waste_generated_per_day, location, contact_info, household_type) VALUES
+('Household_1', 'Anna Nagar', 1.5, ST_SetSRID(ST_MakePoint(80.2081, 13.0829), 4326), 'hh1@email.com', 'residential'),
+('Household_2', 'Anna Nagar', 1.1, ST_SetSRID(ST_MakePoint(80.2075, 13.0825), 4326), 'hh2@email.com', 'residential'),
+('Household_3', 'Anna Nagar', 2.0, ST_SetSRID(ST_MakePoint(80.2085, 13.0831), 4326), 'hh3@email.com', 'residential'),
+('Household_4', 'Anna Nagar', 0.8, ST_SetSRID(ST_MakePoint(80.2079, 13.0780), 4326), 'hh4@email.com', 'residential'),
+('Household_5', 'Anna Nagar', 1.9, ST_SetSRID(ST_MakePoint(80.2088, 13.0775), 4326), 'hh5@email.com', 'residential'),
+('Household_6', 'Anna Nagar', 1.4, ST_SetSRID(ST_MakePoint(80.2093, 13.0768), 4326), 'hh6@email.com', 'residential'),
+('Household_7', 'T Nagar', 2.3, ST_SetSRID(ST_MakePoint(80.2465, 13.0270), 4326), 'hh7@email.com', 'residential'),
+('Household_8', 'T Nagar', 1.0, ST_SetSRID(ST_MakePoint(80.2475, 13.0265), 4326), 'hh8@email.com', 'residential'),
+('Household_9', 'T Nagar', 1.7, ST_SetSRID(ST_MakePoint(80.2480, 13.0272), 4326), 'hh9@email.com', 'residential'),
+('Household_10', 'T Nagar', 2.5, ST_SetSRID(ST_MakePoint(80.2468, 13.0255), 4326), 'hh10@email.com', 'residential'),
+('Household_11', 'T Nagar', 1.3, ST_SetSRID(ST_MakePoint(80.2490, 13.0160), 4326), 'hh11@email.com', 'residential'),
+('Household_12', 'T Nagar', 0.9, ST_SetSRID(ST_MakePoint(80.2485, 13.0155), 4326), 'hh12@email.com', 'residential'),
+('Household_13', 'Adyar', 1.6, ST_SetSRID(ST_MakePoint(80.2805, 13.0105), 4326), 'hh13@email.com', 'residential'),
+('Household_14', 'Adyar', 1.2, ST_SetSRID(ST_MakePoint(80.2815, 13.0095), 4326), 'hh14@email.com', 'residential'),
+('Household_15', 'Adyar', 2.1, ST_SetSRID(ST_MakePoint(80.2820, 13.0110), 4326), 'hh15@email.com', 'residential'),
+('Household_16', 'Adyar', 0.7, ST_SetSRID(ST_MakePoint(80.2795, 13.0088), 4326), 'hh16@email.com', 'residential'),
+('Household_17', 'Mylapore', 1.8, ST_SetSRID(ST_MakePoint(80.2915, 13.0520), 4326), 'hh17@email.com', 'residential'),
+('Household_18', 'Mylapore', 1.4, ST_SetSRID(ST_MakePoint(80.2905, 13.0515), 4326), 'hh18@email.com', 'residential'),
+('Household_19', 'Mylapore', 2.2, ST_SetSRID(ST_MakePoint(80.2925, 13.0525), 4326), 'hh19@email.com', 'residential'),
+('Household_20', 'Mylapore', 0.6, ST_SetSRID(ST_MakePoint(80.2795, 13.0385), 4326), 'hh20@email.com', 'residential'),
+('Household_21', 'Mylapore', 1.9, ST_SetSRID(ST_MakePoint(80.2785, 13.0375), 4326), 'hh21@email.com', 'residential'),
+('Household_22', 'Mylapore', 1.5, ST_SetSRID(ST_MakePoint(80.2770, 13.0360), 4326), 'hh22@email.com', 'residential'),
+('Household_23', 'Velachery', 1.1, ST_SetSRID(ST_MakePoint(80.2700, 12.9915), 4326), 'hh23@email.com', 'residential'),
+('Household_24', 'Velachery', 2.4, ST_SetSRID(ST_MakePoint(80.2715, 12.9905), 4326), 'hh24@email.com', 'residential'),
+('Household_25', 'Velachery', 1.6, ST_SetSRID(ST_MakePoint(80.2725, 12.9925), 4326), 'hh25@email.com', 'residential'),
+('Household_26', 'Velachery', 1.3, ST_SetSRID(ST_MakePoint(80.2708, 12.9930), 4326), 'hh26@email.com', 'residential'),
+('Household_27', 'Guindy', 1.7, ST_SetSRID(ST_MakePoint(80.2640, 12.9865), 4326), 'hh27@email.com', 'residential'),
+('Household_28', 'Guindy', 0.9, ST_SetSRID(ST_MakePoint(80.2655, 12.9855), 4326), 'hh28@email.com', 'residential'),
+('Household_29', 'Guindy', 2.0, ST_SetSRID(ST_MakePoint(80.2650, 12.9870), 4326), 'hh29@email.com', 'residential'),
+('Household_30', 'Guindy', 1.8, ST_SetSRID(ST_MakePoint(80.2635, 12.9845), 4326), 'hh30@email.com', 'residential'),
+('Household_31', 'Ashok Nagar', 1.4, ST_SetSRID(ST_MakePoint(80.2205, 13.0235), 4326), 'hh31@email.com', 'residential'),
+('Household_32', 'Ashok Nagar', 2.1, ST_SetSRID(ST_MakePoint(80.2195, 13.0240), 4326), 'hh32@email.com', 'residential'),
+('Household_33', 'Ashok Nagar', 1.0, ST_SetSRID(ST_MakePoint(80.2210, 13.0245), 4326), 'hh33@email.com', 'residential'),
+('Household_34', 'Ashok Nagar', 1.6, ST_SetSRID(ST_MakePoint(80.2200, 13.0225), 4326), 'hh34@email.com', 'residential'),
+('Household_35', 'Vadapalani', 2.2, ST_SetSRID(ST_MakePoint(80.2040, 13.0445), 4326), 'hh35@email.com', 'residential'),
+('Household_36', 'Vadapalani', 1.3, ST_SetSRID(ST_MakePoint(80.2030, 13.0435), 4326), 'hh36@email.com', 'residential'),
+('Household_37', 'Vadapalani', 1.9, ST_SetSRID(ST_MakePoint(80.2045, 13.0450), 4326), 'hh37@email.com', 'residential'),
+('Household_38', 'Vadapalani', 0.5, ST_SetSRID(ST_MakePoint(80.2025, 13.0428), 4326), 'hh38@email.com', 'residential'),
+('Household_39', 'Purasawalkam', 1.5, ST_SetSRID(ST_MakePoint(80.2248, 13.0648), 4326), 'hh39@email.com', 'residential'),
+('Household_40', 'Purasawalkam', 2.0, ST_SetSRID(ST_MakePoint(80.2240, 13.0642), 4326), 'hh40@email.com', 'residential'),
+('Household_41', 'Purasawalkam', 1.2, ST_SetSRID(ST_MakePoint(80.2252, 13.0652), 4326), 'hh41@email.com', 'residential'),
+('Household_42', 'Purasawalkam', 1.8, ST_SetSRID(ST_MakePoint(80.2235, 13.0638), 4326), 'hh42@email.com', 'residential'),
+('Household_43', 'Thiruvanmiyur', 2.4, ST_SetSRID(ST_MakePoint(80.2785, 12.9680), 4326), 'hh43@email.com', 'residential'),
+('Household_44', 'Thiruvanmiyur', 1.1, ST_SetSRID(ST_MakePoint(80.2795, 12.9675), 4326), 'hh44@email.com', 'residential'),
+('Household_45', 'Thiruvanmiyur', 1.6, ST_SetSRID(ST_MakePoint(80.2805, 12.9690), 4326), 'hh45@email.com', 'residential'),
+('Household_46', 'Thiruvanmiyur', 2.3, ST_SetSRID(ST_MakePoint(80.2780, 12.9665), 4326), 'hh46@email.com', 'residential'),
+('Household_47', 'Pallavaram', 1.4, ST_SetSRID(ST_MakePoint(80.1988, 12.9564), 4326), 'hh47@email.com', 'residential'),
+('Household_48', 'Pallavaram', 1.7, ST_SetSRID(ST_MakePoint(80.1978, 12.9554), 4326), 'hh48@email.com', 'residential'),
+('Household_49', 'Pallavaram', 0.9, ST_SetSRID(ST_MakePoint(80.1995, 12.9570), 4326), 'hh49@email.com', 'residential'),
+('Household_50', 'Pallavaram', 2.1, ST_SetSRID(ST_MakePoint(80.1970, 12.9545), 4326), 'hh50@email.com', 'residential'),
+('Household_51', 'Saidapet', 1.3, ST_SetSRID(ST_MakePoint(80.2575, 13.0045), 4326), 'hh51@email.com', 'residential'),
+('Household_52', 'Saidapet', 2.2, ST_SetSRID(ST_MakePoint(80.2565, 13.0035), 4326), 'hh52@email.com', 'residential'),
+('Household_53', 'Saidapet', 1.5, ST_SetSRID(ST_MakePoint(80.2580, 13.0050), 4326), 'hh53@email.com', 'residential'),
+('Household_54', 'Saidapet', 0.6, ST_SetSRID(ST_MakePoint(80.2560, 13.0030), 4326), 'hh54@email.com', 'residential'),
+('Household_55', 'Royapuram', 1.8, ST_SetSRID(ST_MakePoint(80.2768, 13.0772), 4326), 'hh55@email.com', 'residential'),
+('Household_56', 'Royapuram', 1.0, ST_SetSRID(ST_MakePoint(80.2775, 13.0760), 4326), 'hh56@email.com', 'residential'),
+('Household_57', 'Royapuram', 2.3, ST_SetSRID(ST_MakePoint(80.2780, 13.0780), 4326), 'hh57@email.com', 'residential'),
+('Household_58', 'Royapuram', 1.6, ST_SetSRID(ST_MakePoint(80.2755, 13.0755), 4326), 'hh58@email.com', 'residential'),
+('Household_59', 'Tondiarpet', 1.1, ST_SetSRID(ST_MakePoint(80.2645, 13.0850), 4326), 'hh59@email.com', 'residential'),
+('Household_60', 'Tondiarpet', 1.9, ST_SetSRID(ST_MakePoint(80.2635, 13.0840), 4326), 'hh60@email.com', 'residential'),
+('Household_61', 'Tondiarpet', 1.4, ST_SetSRID(ST_MakePoint(80.2650, 13.0855), 4326), 'hh61@email.com', 'residential'),
+('Household_62', 'Tondiarpet', 2.5, ST_SetSRID(ST_MakePoint(80.2630, 13.0835), 4326), 'hh62@email.com', 'residential'),
+('Household_63', 'KK Nagar', 1.7, ST_SetSRID(ST_MakePoint(80.2312, 13.0339), 4326), 'hh63@email.com', 'residential'),
+('Household_64', 'KK Nagar', 0.8, ST_SetSRID(ST_MakePoint(80.2305, 13.0333), 4326), 'hh64@email.com', 'residential'),
+('Household_65', 'KK Nagar', 2.2, ST_SetSRID(ST_MakePoint(80.2318, 13.0345), 4326), 'hh65@email.com', 'residential'),
+('Household_66', 'KK Nagar', 1.3, ST_SetSRID(ST_MakePoint(80.2302, 13.0328), 4326), 'hh66@email.com', 'residential'),
+('Household_67', 'Tambaram', 1.6, ST_SetSRID(ST_MakePoint(80.2460, 12.9155), 4326), 'hh67@email.com', 'residential'),
+('Household_68', 'Tambaram', 1.2, ST_SetSRID(ST_MakePoint(80.2450, 12.9145), 4326), 'hh68@email.com', 'residential'),
+('Household_69', 'Tambaram', 2.1, ST_SetSRID(ST_MakePoint(80.2470, 12.9160), 4326), 'hh69@email.com', 'residential'),
+('Household_70', 'Tambaram', 0.7, ST_SetSRID(ST_MakePoint(80.2445, 12.9135), 4326), 'hh70@email.com', 'residential'),
+('Household_71', 'Selaiyur', 1.8, ST_SetSRID(ST_MakePoint(80.2525, 12.9216), 4326), 'hh71@email.com', 'residential'),
+('Household_72', 'Selaiyur', 1.4, ST_SetSRID(ST_MakePoint(80.2515, 12.9206), 4326), 'hh72@email.com', 'residential'),
+('Household_73', 'Selaiyur', 2.3, ST_SetSRID(ST_MakePoint(80.2530, 12.9221), 4326), 'hh73@email.com', 'residential'),
+('Household_74', 'Selaiyur', 1.0, ST_SetSRID(ST_MakePoint(80.2510, 12.9200), 4326), 'hh74@email.com', 'residential'),
+('Household_75', 'Velachery', 1.5, ST_SetSRID(ST_MakePoint(80.2705, 12.9900), 4326), 'hh75@email.com', 'residential'),
+('Household_76', 'Velachery', 1.9, ST_SetSRID(ST_MakePoint(80.2715, 12.9910), 4326), 'hh76@email.com', 'residential'),
+('Household_77', 'Velachery', 1.2, ST_SetSRID(ST_MakePoint(80.2720, 12.9905), 4326), 'hh77@email.com', 'residential'),
+('Household_78', 'Velachery', 2.4, ST_SetSRID(ST_MakePoint(80.2710, 12.9895), 4326), 'hh78@email.com', 'residential'),
+('Household_79', 'Mambalam', 1.6, ST_SetSRID(ST_MakePoint(80.2490, 13.0165), 4326), 'hh79@email.com', 'residential'),
+('Household_80', 'Mambalam', 1.3, ST_SetSRID(ST_MakePoint(80.2480, 13.0158), 4326), 'hh80@email.com', 'residential'),
+('Household_81', 'Mambalam', 2.0, ST_SetSRID(ST_MakePoint(80.2495, 13.0170), 4326), 'hh81@email.com', 'residential'),
+('Household_82', 'Mambalam', 0.9, ST_SetSRID(ST_MakePoint(80.2475, 13.0150), 4326), 'hh82@email.com', 'residential'),
+('Household_83', 'Kolathur', 1.7, ST_SetSRID(ST_MakePoint(80.2190, 13.0895), 4326), 'hh83@email.com', 'residential'),
+('Household_84', 'Kolathur', 1.4, ST_SetSRID(ST_MakePoint(80.2180, 13.0885), 4326), 'hh84@email.com', 'residential'),
+('Household_85', 'Kolathur', 2.2, ST_SetSRID(ST_MakePoint(80.2195, 13.0900), 4326), 'hh85@email.com', 'residential'),
+('Household_86', 'Kolathur', 1.1, ST_SetSRID(ST_MakePoint(80.2175, 13.0880), 4326), 'hh86@email.com', 'residential'),
+('Household_87', 'Chromepet', 1.8, ST_SetSRID(ST_MakePoint(80.2135, 12.9470), 4326), 'hh87@email.com', 'residential'),
+('Household_88', 'Chromepet', 1.5, ST_SetSRID(ST_MakePoint(80.2125, 12.9460), 4326), 'hh88@email.com', 'residential'),
+('Household_89', 'Chromepet', 2.3, ST_SetSRID(ST_MakePoint(80.2140, 12.9475), 4326), 'hh89@email.com', 'residential'),
+('Household_90', 'Chromepet', 0.7, ST_SetSRID(ST_MakePoint(80.2120, 12.9455), 4326), 'hh90@email.com', 'residential'),
+('Household_91', 'Mandaveli', 1.4, ST_SetSRID(ST_MakePoint(80.2745, 13.0247), 4326), 'hh91@email.com', 'residential'),
+('Household_92', 'Mandaveli', 2.1, ST_SetSRID(ST_MakePoint(80.2735, 13.0237), 4326), 'hh92@email.com', 'residential'),
+('Household_93', 'Mandaveli', 1.0, ST_SetSRID(ST_MakePoint(80.2750, 13.0252), 4326), 'hh93@email.com', 'residential'),
+('Household_94', 'Mandaveli', 1.6, ST_SetSRID(ST_MakePoint(80.2730, 13.0232), 4326), 'hh94@email.com', 'residential'),
+('Household_95', 'Mogappair', 2.2, ST_SetSRID(ST_MakePoint(80.1705, 13.0650), 4326), 'hh95@email.com', 'residential'),
+('Household_96', 'Mogappair', 1.3, ST_SetSRID(ST_MakePoint(80.1695, 13.0640), 4326), 'hh96@email.com', 'residential'),
+('Household_97', 'Mogappair', 1.9, ST_SetSRID(ST_MakePoint(80.1710, 13.0655), 4326), 'hh97@email.com', 'residential'),
+('Household_98', 'Mogappair', 0.5, ST_SetSRID(ST_MakePoint(80.1690, 13.0635), 4326), 'hh98@email.com', 'residential'),
+('Household_99', 'Ambattur', 1.5, ST_SetSRID(ST_MakePoint(80.1788, 13.0566), 4326), 'hh99@email.com', 'residential'),
+('Household_100', 'Ambattur', 2.0, ST_SetSRID(ST_MakePoint(80.1778, 13.0556), 4326), 'hh100@email.com', 'residential'),
+('Household_101', 'Ambattur', 1.2, ST_SetSRID(ST_MakePoint(80.1793, 13.0571), 4326), 'hh101@email.com', 'residential'),
+('Household_102', 'Ambattur', 1.8, ST_SetSRID(ST_MakePoint(80.1773, 13.0551), 4326), 'hh102@email.com', 'residential'),
+('Household_103', 'Vandalur', 2.4, ST_SetSRID(ST_MakePoint(80.2149, 12.9027), 4326), 'hh103@email.com', 'residential'),
+('Household_104', 'Vandalur', 1.1, ST_SetSRID(ST_MakePoint(80.2139, 12.9017), 4326), 'hh104@email.com', 'residential'),
+('Household_105', 'Vandalur', 1.6, ST_SetSRID(ST_MakePoint(80.2154, 12.9032), 4326), 'hh105@email.com', 'residential'),
+('Household_106', 'Vandalur', 2.3, ST_SetSRID(ST_MakePoint(80.2134, 12.9012), 4326), 'hh106@email.com', 'residential'),
+('Household_107', 'Red Hills', 1.4, ST_SetSRID(ST_MakePoint(80.1794, 13.1116), 4326), 'hh107@email.com', 'residential'),
+('Household_108', 'Red Hills', 1.7, ST_SetSRID(ST_MakePoint(80.1784, 13.1106), 4326), 'hh108@email.com', 'residential'),
+('Household_109', 'Red Hills', 0.9, ST_SetSRID(ST_MakePoint(80.1800, 13.1122), 4326), 'hh109@email.com', 'residential'),
+('Household_110', 'Red Hills', 2.1, ST_SetSRID(ST_MakePoint(80.1779, 13.1101), 4326), 'hh110@email.com', 'residential'),
+('Household_111', 'Arcot Road', 1.3, ST_SetSRID(ST_MakePoint(80.2317, 13.0455), 4326), 'hh111@email.com', 'residential'),
+('Household_112', 'Arcot Road', 2.2, ST_SetSRID(ST_MakePoint(80.2307, 13.0445), 4326), 'hh112@email.com', 'residential'),
+('Household_113', 'Arcot Road', 1.5, ST_SetSRID(ST_MakePoint(80.2322, 13.0460), 4326), 'hh113@email.com', 'residential'),
+('Household_114', 'Arcot Road', 0.6, ST_SetSRID(ST_MakePoint(80.2302, 13.0440), 4326), 'hh114@email.com', 'residential'),
+('Household_115', 'Perambur', 1.8, ST_SetSRID(ST_MakePoint(80.2382, 13.0794), 4326), 'hh115@email.com', 'residential'),
+('Household_116', 'Perambur', 1.0, ST_SetSRID(ST_MakePoint(80.2372, 13.0784), 4326), 'hh116@email.com', 'residential'),
+('Household_117', 'Perambur', 2.3, ST_SetSRID(ST_MakePoint(80.2387, 13.0799), 4326), 'hh117@email.com', 'residential'),
+('Household_118', 'Perambur', 1.6, ST_SetSRID(ST_MakePoint(80.2367, 13.0779), 4326), 'hh118@email.com', 'residential'),
+('Household_119', 'Cathedral Rd', 1.1, ST_SetSRID(ST_MakePoint(80.2686, 13.0524), 4326), 'hh119@email.com', 'residential'),
+('Household_120', 'Cathedral Rd', 1.9, ST_SetSRID(ST_MakePoint(80.2676, 13.0514), 4326), 'hh120@email.com', 'residential'),
+('Household_121', 'Cathedral Rd', 1.4, ST_SetSRID(ST_MakePoint(80.2691, 13.0529), 4326), 'hh121@email.com', 'residential'),
+('Household_122', 'Cathedral Rd', 2.5, ST_SetSRID(ST_MakePoint(80.2671, 13.0509), 4326), 'hh122@email.com', 'residential'),
+('Household_123', 'Medavakkam', 1.7, ST_SetSRID(ST_MakePoint(80.2023, 12.9349), 4326), 'hh123@email.com', 'residential'),
+('Household_124', 'Medavakkam', 0.8, ST_SetSRID(ST_MakePoint(80.2013, 12.9339), 4326), 'hh124@email.com', 'residential'),
+('Household_125', 'Medavakkam', 2.2, ST_SetSRID(ST_MakePoint(80.2028, 12.9354), 4326), 'hh125@email.com', 'residential'),
+('Household_126', 'Medavakkam', 1.3, ST_SetSRID(ST_MakePoint(80.2008, 12.9334), 4326), 'hh126@email.com', 'residential'),
+('Household_127', 'Taramani', 1.6, ST_SetSRID(ST_MakePoint(80.2560, 12.9577), 4326), 'hh127@email.com', 'residential'),
+('Household_128', 'Taramani', 1.2, ST_SetSRID(ST_MakePoint(80.2550, 12.9567), 4326), 'hh128@email.com', 'residential'),
+('Household_129', 'Taramani', 2.1, ST_SetSRID(ST_MakePoint(80.2565, 12.9582), 4326), 'hh129@email.com', 'residential'),
+('Household_130', 'Taramani', 0.7, ST_SetSRID(ST_MakePoint(80.2545, 12.9562), 4326), 'hh130@email.com', 'residential'),
+('Household_131', 'Pondy Bazaar', 1.8, ST_SetSRID(ST_MakePoint(80.2455, 13.0390), 4326), 'hh131@email.com', 'residential'),
+('Household_132', 'Pondy Bazaar', 1.4, ST_SetSRID(ST_MakePoint(80.2445, 13.0380), 4326), 'hh132@email.com', 'residential'),
+('Household_133', 'Pondy Bazaar', 2.3, ST_SetSRID(ST_MakePoint(80.2460, 13.0395), 4326), 'hh133@email.com', 'residential'),
+('Household_134', 'Pondy Bazaar', 1.0, ST_SetSRID(ST_MakePoint(80.2440, 13.0375), 4326), 'hh134@email.com', 'residential'),
+('Household_135', 'Besant Nagar', 1.5, ST_SetSRID(ST_MakePoint(80.2860, 13.0220), 4326), 'hh135@email.com', 'residential'),
+('Household_136', 'Besant Nagar', 1.9, ST_SetSRID(ST_MakePoint(80.2850, 13.0215), 4326), 'hh136@email.com', 'residential'),
+('Household_137', 'Besant Nagar', 1.2, ST_SetSRID(ST_MakePoint(80.2870, 13.0225), 4326), 'hh137@email.com', 'residential'),
+('Household_138', 'Besant Nagar', 2.4, ST_SetSRID(ST_MakePoint(80.2845, 13.0210), 4326), 'hh138@email.com', 'residential'),
+('Household_139', 'Madhavaram', 1.6, ST_SetSRID(ST_MakePoint(80.2405, 13.0904), 4326), 'hh139@email.com', 'residential'),
+('Household_140', 'Madhavaram', 1.3, ST_SetSRID(ST_MakePoint(80.2395, 13.0894), 4326), 'hh140@email.com', 'residential'),
+('Household_141', 'Madhavaram', 2.0, ST_SetSRID(ST_MakePoint(80.2410, 13.0909), 4326), 'hh141@email.com', 'residential'),
+('Household_142', 'Madhavaram', 0.9, ST_SetSRID(ST_MakePoint(80.2390, 13.0889), 4326), 'hh142@email.com', 'residential'),
+('Household_143', 'Ekkattuthangal', 1.7, ST_SetSRID(ST_MakePoint(80.2535, 13.0095), 4326), 'hh143@email.com', 'residential'),
+('Household_144', 'Ekkattuthangal', 1.4, ST_SetSRID(ST_MakePoint(80.2525, 13.0085), 4326), 'hh144@email.com', 'residential'),
+('Household_145', 'Ekkattuthangal', 2.2, ST_SetSRID(ST_MakePoint(80.2540, 13.0100), 4326), 'hh145@email.com', 'residential'),
+('Household_146', 'Ekkattuthangal', 1.1, ST_SetSRID(ST_MakePoint(80.2520, 13.0080), 4326), 'hh146@email.com', 'residential'),
+('Household_147', 'Ramapuram', 1.8, ST_SetSRID(ST_MakePoint(80.2010, 13.0185), 4326), 'hh147@email.com', 'residential'),
+('Household_148', 'Ramapuram', 1.5, ST_SetSRID(ST_MakePoint(80.2000, 13.0175), 4326), 'hh148@email.com', 'residential'),
+('Household_149', 'Ramapuram', 2.3, ST_SetSRID(ST_MakePoint(80.2015, 13.0190), 4326), 'hh149@email.com', 'residential'),
+('Household_150', 'Ramapuram', 0.7, ST_SetSRID(ST_MakePoint(80.1995, 13.0170), 4326), 'hh150@email.com', 'residential'),
+('Household_151', 'Tambaram Sanatorium', 1.4, ST_SetSRID(ST_MakePoint(80.1985, 12.9255), 4326), 'hh151@email.com', 'residential'),
+('Household_152', 'Tambaram Sanatorium', 2.1, ST_SetSRID(ST_MakePoint(80.1975, 12.9245), 4326), 'hh152@email.com', 'residential'),
+('Household_153', 'Tambaram Sanatorium', 1.0, ST_SetSRID(ST_MakePoint(80.1990, 12.9260), 4326), 'hh153@email.com', 'residential'),
+('Household_154', 'Tambaram Sanatorium', 1.6, ST_SetSRID(ST_MakePoint(80.1970, 12.9240), 4326), 'hh154@email.com', 'residential'),
+('Household_155', 'Sholinganallur', 2.2, ST_SetSRID(ST_MakePoint(80.2860, 13.0016), 4326), 'hh155@email.com', 'residential'),
+('Household_156', 'Sholinganallur', 1.3, ST_SetSRID(ST_MakePoint(80.2850, 13.0006), 4326), 'hh156@email.com', 'residential'),
+('Household_157', 'Sholinganallur', 1.9, ST_SetSRID(ST_MakePoint(80.2865, 13.0021), 4326), 'hh157@email.com', 'residential'),
+('Household_158', 'Sholinganallur', 0.5, ST_SetSRID(ST_MakePoint(80.2845, 13.0001), 4326), 'hh158@email.com', 'residential'),
+('Household_159', 'Urapakkam', 1.5, ST_SetSRID(ST_MakePoint(80.2406, 12.8715), 4326), 'hh159@email.com', 'residential'),
+('Household_160', 'Urapakkam', 2.0, ST_SetSRID(ST_MakePoint(80.2396, 12.8705), 4326), 'hh160@email.com', 'residential'),
+('Household_161', 'Urapakkam', 1.2, ST_SetSRID(ST_MakePoint(80.2411, 12.8720), 4326), 'hh161@email.com', 'residential'),
+('Household_162', 'Urapakkam', 1.8, ST_SetSRID(ST_MakePoint(80.2391, 12.8700), 4326), 'hh162@email.com', 'residential'),
+('Household_163', 'Manapakkam', 2.4, ST_SetSRID(ST_MakePoint(80.2115, 13.0055), 4326), 'hh163@email.com', 'residential'),
+('Household_164', 'Manapakkam', 1.1, ST_SetSRID(ST_MakePoint(80.2105, 13.0045), 4326), 'hh164@email.com', 'residential'),
+('Household_165', 'Manapakkam', 1.6, ST_SetSRID(ST_MakePoint(80.2120, 13.0060), 4326), 'hh165@email.com', 'residential'),
+('Household_166', 'Manapakkam', 2.3, ST_SetSRID(ST_MakePoint(80.2100, 13.0040), 4326), 'hh166@email.com', 'residential'),
+('Household_167', 'West Mambalam', 1.4, ST_SetSRID(ST_MakePoint(80.2527, 13.0320), 4326), 'hh167@email.com', 'residential'),
+('Household_168', 'West Mambalam', 1.7, ST_SetSRID(ST_MakePoint(80.2517, 13.0310), 4326), 'hh168@email.com', 'residential'),
+('Household_169', 'West Mambalam', 0.9, ST_SetSRID(ST_MakePoint(80.2532, 13.0325), 4326), 'hh169@email.com', 'residential'),
+('Household_170', 'West Mambalam', 2.1, ST_SetSRID(ST_MakePoint(80.2512, 13.0305), 4326), 'hh170@email.com', 'residential'),
+('Household_171', 'Anna Nagar West Ext.', 1.3, ST_SetSRID(ST_MakePoint(80.2015, 13.0615), 4326), 'hh171@email.com', 'residential'),
+('Household_172', 'Anna Nagar West Ext.', 2.2, ST_SetSRID(ST_MakePoint(80.2005, 13.0605), 4326), 'hh172@email.com', 'residential'),
+('Household_173', 'Anna Nagar West Ext.', 1.5, ST_SetSRID(ST_MakePoint(80.2020, 13.0620), 4326), 'hh173@email.com', 'residential'),
+('Household_174', 'Anna Nagar West Ext.', 0.6, ST_SetSRID(ST_MakePoint(80.2000, 13.0600), 4326), 'hh174@email.com', 'residential'),
+('Household_175', 'Kasimedu', 1.8, ST_SetSRID(ST_MakePoint(80.2690, 13.0885), 4326), 'hh175@email.com', 'residential'),
+('Household_176', 'Kasimedu', 1.0, ST_SetSRID(ST_MakePoint(80.2700, 13.0895), 4326), 'hh176@email.com', 'residential'),
+('Household_177', 'Kasimedu', 2.3, ST_SetSRID(ST_MakePoint(80.2710, 13.0900), 4326), 'hh177@email.com', 'residential'),
+('Household_178', 'Kasimedu', 1.6, ST_SetSRID(ST_MakePoint(80.2685, 13.0880), 4326), 'hh178@email.com', 'residential'),
+('Household_179', 'Saligramam', 1.1, ST_SetSRID(ST_MakePoint(80.2055, 13.0305), 4326), 'hh179@email.com', 'residential'),
+('Household_180', 'Saligramam', 1.9, ST_SetSRID(ST_MakePoint(80.2045, 13.0295), 4326), 'hh180@email.com', 'residential'),
+('Household_181', 'Saligramam', 1.4, ST_SetSRID(ST_MakePoint(80.2060, 13.0310), 4326), 'hh181@email.com', 'residential'),
+('Household_182', 'Saligramam', 2.5, ST_SetSRID(ST_MakePoint(80.2040, 13.0290), 4326), 'hh182@email.com', 'residential'),
+('Household_183', 'Gopalapuram', 1.7, ST_SetSRID(ST_MakePoint(80.2585, 13.0515), 4326), 'hh183@email.com', 'residential'),
+('Household_184', 'Gopalapuram', 0.8, ST_SetSRID(ST_MakePoint(80.2575, 13.0505), 4326), 'hh184@email.com', 'residential'),
+('Household_185', 'Gopalapuram', 2.2, ST_SetSRID(ST_MakePoint(80.2590, 13.0520), 4326), 'hh185@email.com', 'residential'),
+('Household_186', 'Gopalapuram', 1.3, ST_SetSRID(ST_MakePoint(80.2570, 13.0500), 4326), 'hh186@email.com', 'residential'),
+('Household_187', 'Neelangarai', 1.6, ST_SetSRID(ST_MakePoint(80.2915, 13.0145), 4326), 'hh187@email.com', 'residential'),
+('Household_188', 'Neelangarai', 1.2, ST_SetSRID(ST_MakePoint(80.2905, 13.0135), 4326), 'hh188@email.com', 'residential'),
+('Household_189', 'Neelangarai', 2.1, ST_SetSRID(ST_MakePoint(80.2920, 13.0150), 4326), 'hh189@email.com', 'residential'),
+('Household_190', 'Neelangarai', 0.7, ST_SetSRID(ST_MakePoint(80.2900, 13.0130), 4326), 'hh190@email.com', 'residential'),
+('Household_191', 'Kilpauk', 1.8, ST_SetSRID(ST_MakePoint(80.2465, 13.0695), 4326), 'hh191@email.com', 'residential'),
+('Household_192', 'Kilpauk', 1.4, ST_SetSRID(ST_MakePoint(80.2455, 13.0685), 4326), 'hh192@email.com', 'residential'),
+('Household_193', 'Kilpauk', 2.3, ST_SetSRID(ST_MakePoint(80.2470, 13.0700), 4326), 'hh193@email.com', 'residential'),
+('Household_194', 'Kilpauk', 1.0, ST_SetSRID(ST_MakePoint(80.2450, 13.0680), 4326), 'hh194@email.com', 'residential'),
+('Household_195', 'Alwarpet', 1.5, ST_SetSRID(ST_MakePoint(80.2825, 13.0395), 4326), 'hh195@email.com', 'residential'),
+('Household_196', 'Alwarpet', 1.9, ST_SetSRID(ST_MakePoint(80.2815, 13.0385), 4326), 'hh196@email.com', 'residential'),
+('Household_197', 'Alwarpet', 1.2, ST_SetSRID(ST_MakePoint(80.2830, 13.0400), 4326), 'hh197@email.com', 'residential'),
+('Household_198', 'Alwarpet', 2.4, ST_SetSRID(ST_MakePoint(80.2810, 13.0380), 4326), 'hh198@email.com', 'residential'),
+('Household_199', 'Aminjikarai', 1.6, ST_SetSRID(ST_MakePoint(80.2338, 13.0560), 4326), 'hh199@email.com', 'residential'),
+('Household_200', 'Aminjikarai', 1.3, ST_SetSRID(ST_MakePoint(80.2328, 13.0550), 4326), 'hh200@email.com', 'residential'),
+('Household_201', 'Aminjikarai', 2.0, ST_SetSRID(ST_MakePoint(80.2343, 13.0565), 4326), 'hh201@email.com', 'residential'),
+('Household_202', 'Aminjikarai', 0.9, ST_SetSRID(ST_MakePoint(80.2323, 13.0545), 4326), 'hh202@email.com', 'residential'),
+('Household_203', 'Manali', 1.7, ST_SetSRID(ST_MakePoint(80.2215, 13.1025), 4326), 'hh203@email.com', 'residential'),
+('Household_204', 'Manali', 1.4, ST_SetSRID(ST_MakePoint(80.2205, 13.1015), 4326), 'hh204@email.com', 'residential'),
+('Household_205', 'Manali', 2.2, ST_SetSRID(ST_MakePoint(80.2220, 13.1030), 4326), 'hh205@email.com', 'residential'),
+('Household_206', 'Manali', 1.1, ST_SetSRID(ST_MakePoint(80.2200, 13.1010), 4326), 'hh206@email.com', 'residential'),
+('Household_207', 'CMBT Area', 1.8, ST_SetSRID(ST_MakePoint(80.1855, 13.0725), 4326), 'hh207@email.com', 'residential'),
+('Household_208', 'CMBT Area', 1.5, ST_SetSRID(ST_MakePoint(80.1845, 13.0715), 4326), 'hh208@email.com', 'residential'),
+('Household_209', 'CMBT Area', 2.3, ST_SetSRID(ST_MakePoint(80.1860, 13.0730), 4326), 'hh209@email.com', 'residential'),
+('Household_210', 'CMBT Area', 0.7, ST_SetSRID(ST_MakePoint(80.1840, 13.0710), 4326), 'hh210@email.com', 'residential'),
+('Household_211', 'Porur', 1.4, ST_SetSRID(ST_MakePoint(80.1705, 12.9805), 4326), 'hh211@email.com', 'residential'),
+('Household_212', 'Porur', 2.1, ST_SetSRID(ST_MakePoint(80.1695, 12.9795), 4326), 'hh212@email.com', 'residential'),
+('Household_213', 'Porur', 1.0, ST_SetSRID(ST_MakePoint(80.1710, 12.9810), 4326), 'hh213@email.com', 'residential'),
+('Household_214', 'Porur', 1.6, ST_SetSRID(ST_MakePoint(80.1690, 12.9790), 4326), 'hh214@email.com', 'residential'),
+('Household_215', 'Meenambakkam', 2.2, ST_SetSRID(ST_MakePoint(80.2105, 12.9605), 4326), 'hh215@email.com', 'residential'),
+('Household_216', 'Meenambakkam', 1.3, ST_SetSRID(ST_MakePoint(80.2095, 12.9595), 4326), 'hh216@email.com', 'residential'),
+('Household_217', 'Meenambakkam', 1.9, ST_SetSRID(ST_MakePoint(80.2110, 12.9610), 4326), 'hh217@email.com', 'residential'),
+('Household_218', 'Meenambakkam', 0.5, ST_SetSRID(ST_MakePoint(80.2090, 12.9590), 4326), 'hh218@email.com', 'residential'),
+('Household_219', 'Otteri', 1.5, ST_SetSRID(ST_MakePoint(80.2415, 13.0745), 4326), 'hh219@email.com', 'residential'),
+('Household_220', 'Otteri', 2.0, ST_SetSRID(ST_MakePoint(80.2405, 13.0735), 4326), 'hh220@email.com', 'residential'),
+('Household_221', 'Otteri', 1.2, ST_SetSRID(ST_MakePoint(80.2420, 13.0750), 4326), 'hh221@email.com', 'residential'),
+('Household_222', 'Otteri', 1.8, ST_SetSRID(ST_MakePoint(80.2400, 13.0730), 4326), 'hh222@email.com', 'residential'),
+('Household_223', 'Washermanpet', 2.4, ST_SetSRID(ST_MakePoint(80.2605, 13.0805), 4326), 'hh223@email.com', 'residential'),
+('Household_224', 'Washermanpet', 1.1, ST_SetSRID(ST_MakePoint(80.2595, 13.0795), 4326), 'hh224@email.com', 'residential'),
+('Household_225', 'Washermanpet', 1.6, ST_SetSRID(ST_MakePoint(80.2610, 13.0810), 4326), 'hh225@email.com', 'residential'),
+('Household_226', 'Washermanpet', 2.3, ST_SetSRID(ST_MakePoint(80.2590, 13.0790), 4326), 'hh226@email.com', 'residential'),
+('Household_227', 'Madipakkam', 1.4, ST_SetSRID(ST_MakePoint(80.2505, 12.9705), 4326), 'hh227@email.com', 'residential'),
+('Household_228', 'Madipakkam', 1.7, ST_SetSRID(ST_MakePoint(80.2495, 12.9695), 4326), 'hh228@email.com', 'residential'),
+('Household_229', 'Madipakkam', 0.9, ST_SetSRID(ST_MakePoint(80.2510, 12.9710), 4326), 'hh229@email.com', 'residential'),
+('Household_230', 'Madipakkam', 2.1, ST_SetSRID(ST_MakePoint(80.2490, 12.9690), 4326), 'hh230@email.com', 'residential'),
+('Household_231', 'Mugalivakkam', 1.3, ST_SetSRID(ST_MakePoint(80.2005, 12.9905), 4326), 'hh231@email.com', 'residential'),
+('Household_232', 'Mugalivakkam', 2.2, ST_SetSRID(ST_MakePoint(80.1995, 12.9895), 4326), 'hh232@email.com', 'residential'),
+('Household_233', 'Mugalivakkam', 1.5, ST_SetSRID(ST_MakePoint(80.2010, 12.9910), 4326), 'hh233@email.com', 'residential'),
+('Household_234', 'Mugalivakkam', 0.6, ST_SetSRID(ST_MakePoint(80.1990, 12.9890), 4326), 'hh234@email.com', 'residential'),
+('Household_235', 'Chitlapakkam', 1.8, ST_SetSRID(ST_MakePoint(80.2305, 12.9305), 4326), 'hh235@email.com', 'residential'),
+('Household_236', 'Chitlapakkam', 1.0, ST_SetSRID(ST_MakePoint(80.2295, 12.9295), 4326), 'hh236@email.com', 'residential'),
+('Household_237', 'Chitlapakkam', 2.3, ST_SetSRID(ST_MakePoint(80.2310, 12.9310), 4326), 'hh237@email.com', 'residential'),
+('Household_238', 'Chitlapakkam', 1.6, ST_SetSRID(ST_MakePoint(80.2290, 12.9290), 4326), 'hh238@email.com', 'residential'),
+('Household_239', 'Taramani', 1.1, ST_SetSRID(ST_MakePoint(80.2705, 13.0005), 4326), 'hh239@email.com', 'residential'),
+('Household_240', 'Taramani', 1.9, ST_SetSRID(ST_MakePoint(80.2695, 12.9995), 4326), 'hh240@email.com', 'residential'),
+('Household_241', 'Taramani', 1.4, ST_SetSRID(ST_MakePoint(80.2710, 13.0010), 4326), 'hh241@email.com', 'residential'),
+('Household_242', 'Taramani', 2.5, ST_SetSRID(ST_MakePoint(80.2690, 12.9990), 4326), 'hh242@email.com', 'residential'),
+('Household_243', 'Kodambakkam', 1.7, ST_SetSRID(ST_MakePoint(80.2505, 13.0405), 4326), 'hh243@email.com', 'residential'),
+('Household_244', 'Kodambakkam', 0.8, ST_SetSRID(ST_MakePoint(80.2495, 13.0395), 4326), 'hh244@email.com', 'residential'),
+('Household_245', 'Kodambakkam', 2.2, ST_SetSRID(ST_MakePoint(80.2510, 13.0410), 4326), 'hh245@email.com', 'residential'),
+('Household_246', 'Kodambakkam', 1.3, ST_SetSRID(ST_MakePoint(80.2490, 13.0390), 4326), 'hh246@email.com', 'residential'),
+('Household_247', 'K.K. Nagar', 1.6, ST_SetSRID(ST_MakePoint(80.2105, 13.0205), 4326), 'hh247@email.com', 'residential'),
+('Household_248', 'K.K. Nagar', 1.2, ST_SetSRID(ST_MakePoint(80.2095, 13.0195), 4326), 'hh248@email.com', 'residential'),
+('Household_249', 'K.K. Nagar', 2.1, ST_SetSRID(ST_MakePoint(80.2110, 13.0210), 4326), 'hh249@email.com', 'residential'),
+('Household_250', 'K.K. Nagar', 0.7, ST_SetSRID(ST_MakePoint(80.2090, 13.0190), 4326), 'hh250@email.com', 'residential'),
+('Household_251', 'Nandanam', 1.8, ST_SetSRID(ST_MakePoint(80.2505, 13.0005), 4326), 'hh251@email.com', 'residential'),
+('Household_252', 'Nandanam', 1.4, ST_SetSRID(ST_MakePoint(80.2495, 12.9995), 4326), 'hh252@email.com', 'residential'),
+('Household_253', 'Nandanam', 2.3, ST_SetSRID(ST_MakePoint(80.2510, 13.0010), 4326), 'hh253@email.com', 'residential'),
+('Household_254', 'Nandanam', 1.0, ST_SetSRID(ST_MakePoint(80.2490, 12.9990), 4326), 'hh254@email.com', 'residential'),
+('Household_255', 'Teynampet', 1.5, ST_SetSRID(ST_MakePoint(80.2605, 13.0105), 4326), 'hh255@email.com', 'residential'),
+('Household_256', 'Teynampet', 1.9, ST_SetSRID(ST_MakePoint(80.2595, 13.0095), 4326), 'hh256@email.com', 'residential'),
+('Household_257', 'Teynampet', 1.2, ST_SetSRID(ST_MakePoint(80.2610, 13.0110), 4326), 'hh257@email.com', 'residential'),
+('Household_258', 'Teynampet', 2.4, ST_SetSRID(ST_MakePoint(80.2590, 13.0090), 4326), 'hh258@email.com', 'residential'),
+('Household_259', 'RA Puram', 1.6, ST_SetSRID(ST_MakePoint(80.2805, 13.0305), 4326), 'hh259@email.com', 'residential'),
+('Household_260', 'RA Puram', 1.3, ST_SetSRID(ST_MakePoint(80.2795, 13.0295), 4326), 'hh260@email.com', 'residential'),
+('Household_261', 'RA Puram', 2.0, ST_SetSRID(ST_MakePoint(80.2810, 13.0310), 4326), 'hh261@email.com', 'residential'),
+('Household_262', 'RA Puram', 0.9, ST_SetSRID(ST_MakePoint(80.2790, 13.0290), 4326), 'hh262@email.com', 'residential'),
+('Household_263', 'Kottivakkam', 1.7, ST_SetSRID(ST_MakePoint(80.2945, 12.9995), 4326), 'hh263@email.com', 'residential'),
+('Household_264', 'Kottivakkam', 1.4, ST_SetSRID(ST_MakePoint(80.2935, 12.9985), 4326), 'hh264@email.com', 'residential'),
+('Household_265', 'Kottivakkam', 2.2, ST_SetSRID(ST_MakePoint(80.2950, 13.0000), 4326), 'hh265@email.com', 'residential'),
+('Household_266', 'Kottivakkam', 1.1, ST_SetSRID(ST_MakePoint(80.2930, 12.9980), 4326), 'hh266@email.com', 'residential'),
+('Household_267', 'Injambakkam', 1.8, ST_SetSRID(ST_MakePoint(80.2995, 12.9795), 4326), 'hh267@email.com', 'residential'),
+('Household_268', 'Injambakkam', 1.5, ST_SetSRID(ST_MakePoint(80.2985, 12.9785), 4326), 'hh268@email.com', 'residential'),
+('Household_269', 'Injambakkam', 2.3, ST_SetSRID(ST_MakePoint(80.3000, 12.9800), 4326), 'hh269@email.com', 'residential'),
+('Household_270', 'Injambakkam', 0.7, ST_SetSRID(ST_MakePoint(80.2980, 12.9780), 4326), 'hh270@email.com', 'residential'),
+('Household_271', 'SIPCOT Area', 1.4, ST_SetSRID(ST_MakePoint(80.2905, 12.9605), 4326), 'hh271@email.com', 'residential'),
+('Household_272', 'SIPCOT Area', 2.1, ST_SetSRID(ST_MakePoint(80.2895, 12.9595), 4326), 'hh272@email.com', 'residential'),
+('Household_273', 'SIPCOT Area', 1.0, ST_SetSRID(ST_MakePoint(80.2910, 12.9610), 4326), 'hh273@email.com', 'residential'),
+('Household_274', 'SIPCOT Area', 1.6, ST_SetSRID(ST_MakePoint(80.2890, 12.9590), 4326), 'hh274@email.com', 'residential'),
+('Household_275', 'Karapakkam', 2.2, ST_SetSRID(ST_MakePoint(80.2805, 12.9505), 4326), 'hh275@email.com', 'residential'),
+('Household_276', 'Karapakkam', 1.3, ST_SetSRID(ST_MakePoint(80.2795, 12.9495), 4326), 'hh276@email.com', 'residential'),
+('Household_277', 'Karapakkam', 1.9, ST_SetSRID(ST_MakePoint(80.2810, 12.9510), 4326), 'hh277@email.com', 'residential'),
+('Household_278', 'Karapakkam', 0.5, ST_SetSRID(ST_MakePoint(80.2790, 12.9490), 4326), 'hh278@email.com', 'residential'),
+('Household_279', 'Perungalathur', 1.5, ST_SetSRID(ST_MakePoint(80.2605, 12.9005), 4326), 'hh279@email.com', 'residential'),
+('Household_280', 'Perungalathur', 2.0, ST_SetSRID(ST_MakePoint(80.2595, 12.8995), 4326), 'hh280@email.com', 'residential'),
+('Household_281', 'Perungalathur', 1.2, ST_SetSRID(ST_MakePoint(80.2610, 12.9010), 4326), 'hh281@email.com', 'residential'),
+('Household_282', 'Perungalathur', 1.8, ST_SetSRID(ST_MakePoint(80.2590, 12.8990), 4326), 'hh282@email.com', 'residential'),
+('Household_283', 'Tambaram Bypass', 2.4, ST_SetSRID(ST_MakePoint(80.2405, 12.9005), 4326), 'hh283@email.com', 'residential'),
+('Household_284', 'Tambaram Bypass', 1.1, ST_SetSRID(ST_MakePoint(80.2395, 12.8995), 4326), 'hh284@email.com', 'residential'),
+('Household_285', 'Tambaram Bypass', 1.6, ST_SetSRID(ST_MakePoint(80.2410, 12.9010), 4326), 'hh285@email.com', 'residential'),
+('Household_286', 'Tambaram Bypass', 2.3, ST_SetSRID(ST_MakePoint(80.2390, 12.8990), 4326), 'hh286@email.com', 'residential'),
+('Household_287', 'East Tambaram', 1.4, ST_SetSRID(ST_MakePoint(80.2205, 12.9105), 4326), 'hh287@email.com', 'residential'),
+('Household_288', 'East Tambaram', 1.7, ST_SetSRID(ST_MakePoint(80.2195, 12.9095), 4326), 'hh288@email.com', 'residential'),
+('Household_289', 'East Tambaram', 0.9, ST_SetSRID(ST_MakePoint(80.2210, 12.9110), 4326), 'hh289@email.com', 'residential'),
+('Household_290', 'East Tambaram', 2.1, ST_SetSRID(ST_MakePoint(80.2190, 12.9090), 4326), 'hh290@email.com', 'residential'),
+('Household_291', 'West Tambaram', 1.3, ST_SetSRID(ST_MakePoint(80.2105, 12.9205), 4326), 'hh291@email.com', 'residential'),
+('Household_292', 'West Tambaram', 2.2, ST_SetSRID(ST_MakePoint(80.2095, 12.9195), 4326), 'hh292@email.com', 'residential'),
+('Household_293', 'West Tambaram', 1.5, ST_SetSRID(ST_MakePoint(80.2110, 12.9210), 4326), 'hh293@email.com', 'residential'),
+('Household_294', 'West Tambaram', 0.6, ST_SetSRID(ST_MakePoint(80.2090, 12.9190), 4326), 'hh294@email.com', 'residential'),
+('Household_295', 'Anakaputhur', 1.8, ST_SetSRID(ST_MakePoint(80.1905, 12.9305), 4326), 'hh295@email.com', 'residential'),
+('Household_296', 'Anakaputhur', 1.0, ST_SetSRID(ST_MakePoint(80.1895, 12.9295), 4326), 'hh296@email.com', 'residential'),
+('Household_297', 'Anakaputhur', 2.3, ST_SetSRID(ST_MakePoint(80.1910, 12.9310), 4326), 'hh297@email.com', 'residential'),
+('Household_298', 'Anakaputhur', 1.6, ST_SetSRID(ST_MakePoint(80.1890, 12.9290), 4326), 'hh298@email.com', 'residential'),
+('Household_299', 'Mangadu', 1.1, ST_SetSRID(ST_MakePoint(80.1705, 12.9505), 4326), 'hh299@email.com', 'residential'),
+('Household_300', 'Mangadu', 1.9, ST_SetSRID(ST_MakePoint(80.1695, 12.9495), 4326), 'hh300@email.com', 'residential');
+
+INSERT INTO bins (capacity, last_collected, location, bin_type, fill_level, status) VALUES
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2078, 13.0827), 4326), 'standard', 85, 'active'),  -- Anna Nagar, Chennai
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2091, 13.0765), 4326), 'standard', 92, 'active'),  -- Anna Nagar East
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2705, 13.0655), 4326), 'standard', 78, 'active'),  -- Triplicane High Road (inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2470, 13.0560), 4326), 'standard', 100, 'full'),   -- Nungambakkam High Road (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2505, 13.0645), 4326), 'standard', 63, 'active'),  -- Chetpet Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2801, 13.0098), 4326), 'standard', 97, 'active'),  -- Adyar/OMR Junction (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2646, 12.9861), 4326), 'standard', 55, 'active'),  -- Guindy/Mount Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2201, 13.0238), 4326), 'standard', 89, 'active'),  -- Ashok Nagar Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2036, 13.0442), 4326), 'standard', 12, 'active'),  -- Vadapalani Bus Terminus Area
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2244, 13.0645), 4326), 'standard', 76, 'active'),  -- Purasawalkam High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2790, 12.9689), 4326), 'standard', 100, 'full'),   -- ECR near Thiruvanmiyur (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1983, 12.9559), 4326), 'standard', 34, 'active'),  -- Pallavaram High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2570, 13.0041), 4326), 'standard', 88, 'active'),  -- Saidapet Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2764, 13.0768), 4326), 'standard', 95, 'active'),  -- Royapuram/North Chennai
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2641, 13.0847), 4326), 'standard', 81, 'active'),  -- Tondiarpet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2309, 13.0336), 4326), 'standard', 77, 'active'),  -- KK Nagar
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2458, 12.9150), 4326), 'standard', 90, 'active'),  -- Tambaram Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2520, 12.9211), 4326), 'standard', 86, 'active'),  -- Selaiyur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2711, 12.9922), 4326), 'standard', 42, 'active'),  -- Velachery Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2472, 13.0264), 4326), 'standard', 100, 'full'),   -- T Nagar Ranganathan St (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2488, 13.0163), 4326), 'standard', 79, 'active'),  -- Mambalam Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2910, 13.0510), 4326), 'standard', 94, 'active'),  -- Mylapore Bazaar (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2880, 13.0450), 4326), 'standard', 51, 'active'),  -- Santhome High Road (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2185, 13.0890), 4326), 'standard', 87, 'active'),  -- Kolathur Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2131, 12.9466), 4326), 'standard', 73, 'active'),  -- Chromepet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2315, 13.0089), 4326), 'standard', 98, 'active'),  -- Jafferkhanpet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2741, 13.0242), 4326), 'standard', 68, 'active'),  -- Mandaveli
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2930, 13.0480), 4326), 'standard', 82, 'active'),  -- Foreshore Estate (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1702, 13.0645), 4326), 'standard', 70, 'active'),  -- Mogappair West
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1783, 13.0561), 4326), 'standard', 93, 'active'),  -- Ambattur Industrial Estate Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2144, 12.9022), 4326), 'standard', 15, 'active'),  -- Vandalur Zoo Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1789, 13.1111), 4326), 'standard', 80, 'active'),  -- Red Hills Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2312, 13.0450), 4326), 'standard', 45, 'active'),  -- Arcot Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2377, 13.0789), 4326), 'standard', 91, 'active'),  -- Perambur Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2790, 13.0381), 4326), 'standard', 100, 'full'),   -- Mylapore near Luz Corner (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2681, 13.0519), 4326), 'standard', 74, 'active'),  -- Cathedral Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2018, 12.9344), 4326), 'standard', 83, 'active'),  -- Medavakkam High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2555, 12.9572), 4326), 'standard', 96, 'active'),  -- IIT Madras/Taramani Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2450, 13.0385), 4326), 'standard', 88, 'active'),  -- Pondy Bazaar
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2705, 13.0715), 4326), 'standard', 100, 'full'),   -- Broadway area (Inland, FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2855, 13.0225), 4326), 'standard', 71, 'active'),  -- Besant Nagar (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2399, 13.0899), 4326), 'standard', 90, 'active'),  -- Madhavaram Milk Colony
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2530, 13.0090), 4326), 'standard', 85, 'active'),  -- Ekkattuthangal
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2005, 13.0180), 4326), 'standard', 95, 'active'),  -- Ramapuram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1980, 12.9250), 4326), 'standard', 60, 'active'),  -- Tambaram Sanatorium
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2855, 13.0011), 4326), 'standard', 78, 'active'),  -- OMR near Sholinganallur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2401, 12.8710), 4326), 'standard', 91, 'active'),  -- GST Road Urapakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2110, 13.0050), 4326), 'standard', 99, 'active'),  -- Manapakkam Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2522, 13.0315), 4326), 'standard', 53, 'active'),  -- West Mambalam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2010, 13.0610), 4326), 'standard', 84, 'active'),  -- Anna Nagar West Extension
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2695, 13.0890), 4326), 'standard', 38, 'active'),  -- Kasimedu Harbour Road (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2050, 13.0300), 4326), 'standard', 86, 'active'),  -- Saligramam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2580, 13.0510), 4326), 'standard', 77, 'active'),  -- Gopalapuram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2910, 13.0140), 4326), 'standard', 93, 'active'),  -- Neelangarai ECR (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2460, 13.0690), 4326), 'standard', 81, 'active'),  -- Kilpauk Garden Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2820, 13.0390), 4326), 'standard', 97, 'active'),  -- TTK Road Alwarpet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2333, 13.0555), 4326), 'standard', 100, 'full'),   -- Aminjikarai Road (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2210, 13.1020), 4326), 'standard', 89, 'active'),  -- Manali Express Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1850, 13.0720), 4326), 'standard', 74, 'active'),  -- Poonamallee High Road near CMBT
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1700, 12.9800), 4326), 'standard', 65, 'active'),  -- Porur Bypass
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 12.9600), 4326), 'standard', 92, 'active'),  -- Meenambakkam Airport Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2410, 13.0740), 4326), 'standard', 83, 'active'),  -- Otteri Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2600, 13.0800), 4326), 'standard', 100, 'full'),   -- Old Washermanpet Market (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 12.9700), 4326), 'standard', 72, 'active'),  -- Madipakkam Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2000, 12.9900), 4326), 'standard', 80, 'active'),  -- Mugalivakkam Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2300, 12.9300), 4326), 'standard', 98, 'active'),  -- Chitlapakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2700, 13.0000), 4326), 'standard', 49, 'active'),  -- Tidel Park OMR
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 13.0400), 4326), 'standard', 87, 'active'),  -- Kodambakkam High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2350, 13.0400), 4326), 'standard', 75, 'active'),  -- Jawaharlal Nehru Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2650, 13.0600), 4326), 'standard', 84, 'active'),  -- Egmore High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2800, 13.0500), 4326), 'standard', 90, 'active'),  -- Triplicane High Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2540, 13.0890), 4326), 'standard', 100, 'full'),   -- Stanley Hospital Road (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2150, 13.0950), 4326), 'standard', 79, 'active'),  -- Villivakkam Redhills Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2050, 13.0750), 4326), 'standard', 95, 'active'),  -- Retteri Junction
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2300, 12.9700), 4326), 'standard', 88, 'active'),  -- Adambakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2600, 12.9300), 4326), 'standard', 70, 'active'),  -- Agaram then
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 12.9400), 4326), 'standard', 92, 'active'),  -- Sembakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1900, 13.0300), 4326), 'standard', 63, 'active'),  -- Kundrathur Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2000, 13.0400), 4326), 'standard', 100, 'full'),   -- Virugambakkam Market (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2200, 13.0100), 4326), 'standard', 81, 'active'),  -- Guindy Industrial Estate
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2400, 13.0500), 4326), 'standard', 76, 'active'),  -- Harrington Road Chetpet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2800, 12.9900), 4326), 'standard', 94, 'active'),  -- OMR near Perungudi
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2300, 13.0600), 4326), 'standard', 86, 'active'),  -- ICF Colony Perambur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 13.0700), 4326), 'standard', 55, 'active'),  -- Ambattur Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2880, 13.0680), 4326), 'standard', 89, 'active'),  -- Ennore Express Road (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2600, 13.0900), 4326), 'standard', 90, 'active'),  -- Manali New Town
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 13.0700), 4326), 'standard', 77, 'active'),  -- Vepery
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2700, 13.0400), 4326), 'standard', 93, 'active'),  -- CIT Colony Mylapore
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2200, 13.0300), 4326), 'standard', 82, 'active'),  -- Valasaravakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 13.0400), 4326), 'standard', 100, 'full'),   -- Porur Junction (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1900, 12.9400), 4326), 'standard', 71, 'active'),  -- Pammal Main Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2840, 12.9790), 4326), 'standard', 96, 'active'),  -- Palavakkam ECR (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2350, 12.9600), 4326), 'standard', 85, 'active'),  -- Mount Road St Thomas Mount
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2000, 12.9100), 4326), 'standard', 74, 'active'),  -- Mudichur Road Tambaram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2450, 12.9500), 4326), 'standard', 83, 'active'),  -- GST Road Pallikaranai
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2650, 12.9400), 4326), 'standard', 91, 'active'),  -- Pallikaranai Marsh Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2800, 12.9700), 4326), 'standard', 98, 'active'),  -- Thoraipakkam OMR
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2700, 13.0100), 4326), 'standard', 80, 'active'),  -- Kotturpuram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2400, 13.0000), 4326), 'standard', 72, 'active'),  -- Defence Colony
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 13.0200), 4326), 'standard', 95, 'active'),  -- K.K. Nagar West
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2250, 13.0700), 4326), 'standard', 86, 'active'),  -- Anna Nagar 3rd Avenue
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2350, 13.0800), 4326), 'standard', 77, 'active'),  -- Thiru Vi Ka Nagar
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 13.0900), 4326), 'standard', 93, 'active'),  -- Moolakadai Junction
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2700, 13.0800), 4326), 'standard', 81, 'active'),  -- VOC Nagar Tondiarpet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2790, 13.0690), 4326), 'standard', 100, 'full'),   -- George Town/Parrys (Inland, FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2890, 13.0600), 4326), 'standard', 70, 'active'),  -- Washermanpet (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2650, 13.0300), 4326), 'standard', 85, 'active'),  -- Abhiramapuram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2300, 13.0200), 4326), 'standard', 74, 'active'),  -- Nesapakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 13.0300), 4326), 'standard', 92, 'active'),  -- Alwarthirunagar
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1900, 13.0500), 4326), 'standard', 63, 'active'),  -- Nolambur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2000, 13.0600), 4326), 'standard', 88, 'active'),  -- Koyambedu Market Area
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 12.9800), 4326), 'standard', 79, 'active'),  -- Nanganallur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2300, 12.9900), 4326), 'standard', 95, 'active'),  -- Velachery Road near Airport
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2500, 13.0000), 4326), 'standard', 84, 'active'),  -- Nandanam Signal
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2600, 13.0100), 4326), 'standard', 76, 'active'),  -- Teynampet
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2700, 13.0200), 4326), 'standard', 91, 'active'),  -- Cenotaph Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2800, 13.0300), 4326), 'standard', 83, 'active'),  -- RA Puram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2880, 13.0190), 4326), 'standard', 68, 'active'),  -- Thiruvanmiyur Beach Road (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2940, 12.9990), 4326), 'standard', 97, 'active'),  -- Kottivakkam ECR (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2990, 12.9790), 4326), 'standard', 88, 'active'),  -- Injambakkam ECR (Inland)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2900, 12.9600), 4326), 'standard', 75, 'active'),  -- OMR near SIPCOT
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2800, 12.9500), 4326), 'standard', 90, 'active'),  -- Karapakkam OMR
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2600, 12.9000), 4326), 'standard', 100, 'full'),   -- GST Road near Perungalathur (FULL)
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2400, 12.9000), 4326), 'standard', 86, 'active'),  -- Tambaram Bypass Road
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2200, 12.9100), 4326), 'standard', 77, 'active'),  -- East Tambaram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.2100, 12.9200), 4326), 'standard', 94, 'active'),  -- West Tambaram
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1900, 12.9300), 4326), 'standard', 81, 'active'),  -- Anakaputhur
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1800, 12.9400), 4326), 'standard', 60, 'active'),  -- Thirumudivakkam
+(100, NULL, ST_SetSRID(ST_MakePoint(80.1700, 12.9500), 4326), 'standard', 98, 'active');  -- Mangadu Main Road
+-- -----------------------------
+-- Sample Waste Types
+-- (Note: 50-60 waste types is unrealistic. 
+-- Here is a more comprehensive list of 10.)
+-- -----------------------------
+INSERT INTO waste_types (name, description, recyclable)
+VALUES
+('Organic', 'Food waste, yard waste, compostable materials', FALSE),
+('Plastic', 'PET, HDPE, LDPE, bottles, bags, containers', TRUE),
+('Paper', 'Newspapers, cardboard, office paper, magazines', TRUE),
+('Glass', 'Glass bottles, jars (clear, brown, green)', TRUE),
+('Metal', 'Aluminum cans, steel cans, foil', TRUE),
+('Mixed General', 'Non-recyclable general household waste', FALSE),
+('E-Waste', 'Electronic waste, batteries, light bulbs', TRUE),
+('Hazardous', 'Chemicals, paint, solvents, medical waste', FALSE),
+('Textiles', 'Old clothing, rags, fabric scraps', TRUE),
+('Construction', 'Rubble, wood, concrete, debris', FALSE);
+
+-- -----------------------------
+-- Sample Vehicles (50 Vehicles)
+-- -----------------------------
+INSERT INTO vehicles (license_plate, capacity, vehicle_type, assigned_user_id, status)
+VALUES
+('TN-01-V-1001', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1002', 4000, 'Van', 3, 'active'),
+('TN-01-V-1003', 7000, 'Truck', NULL, 'maintenance'),
+('TN-01-V-1004', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1005', 3000, 'Van', 3, 'active'),
+('TN-01-V-1006', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1007', 4000, 'Van', 3, 'inactive'),
+('TN-01-V-1008', 7000, 'Truck', 2, 'active'),
+('TN-01-V-1009', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1010', 3000, 'Van', NULL, 'active'),
+('TN-01-V-1011', 5000, 'Truck', 2, 'maintenance'),
+('TN-01-V-1012', 4000, 'Van', 3, 'active'),
+('TN-01-V-1013', 7000, 'Truck', 2, 'active'),
+('TN-01-V-1014', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1015', 3000, 'Van', 2, 'active'),
+('TN-01-V-1016', 5000, 'Truck', 3, 'inactive'),
+('TN-01-V-1017', 4000, 'Van', 2, 'active'),
+('TN-01-V-1018', 7000, 'Truck', 3, 'active'),
+('TN-01-V-1019', 5000, 'Truck', NULL, 'maintenance'),
+('TN-01-V-1020', 3000, 'Van', 2, 'active'),
+('TN-01-V-1021', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1022', 4000, 'Van', 2, 'active'),
+('TN-01-V-1023', 7000, 'Truck', 3, 'active'),
+('TN-01-V-1024', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1025', 3000, 'Van', 3, 'active'),
+('TN-01-V-1026', 5000, 'Truck', 2, 'inactive'),
+('TN-01-V-1027', 4000, 'Van', 3, 'active'),
+('TN-01-V-1028', 7000, 'Truck', 2, 'active'),
+('TN-01-V-1029', 5000, 'Truck', 3, 'maintenance'),
+('TN-01-V-1030', 3000, 'Van', NULL, 'active'),
+('TN-01-V-1031', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1032', 4000, 'Van', 3, 'active'),
+('TN-01-V-1033', 7000, 'Truck', 2, 'active'),
+('TN-01-V-1034', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1035', 3000, 'Van', 2, 'active'),
+('TN-01-V-1036', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1037', 4000, 'Van', 2, 'maintenance'),
+('TN-01-V-1038', 7000, 'Truck', 3, 'active'),
+('TN-01-V-1039', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1040', 3000, 'Van', 3, 'inactive'),
+('TN-01-V-1041', 5000, 'Truck', 2, 'active'),
+('TN-01-V-1042', 4000, 'Van', 3, 'active'),
+('TN-01-V-1043', 7000, 'Truck', 2, 'active'),
+('TN-01-V-1044', 5000, 'Truck', 3, 'maintenance'),
+('TN-01-V-1045', 3000, 'Van', 2, 'active'),
+('TN-01-V-1046', 5000, 'Truck', 3, 'active'),
+('TN-01-V-1047', 4000, 'Van', 2, 'active'),
+('TN-01-V-1048', 7000, 'Truck', 3, 'active'),
+('TN-01-V-1049', 5000, 'Truck', NULL, 'active'),
+('TN-01-V-1050', 3000, 'Van', 2, 'active');
+
+-- -----------------------------
+-- Sample Suggested Bins (50 Suggestions)
+-- -----------------------------
+INSERT INTO suggested_bins (reason, location, suggested_capacity)
+VALUES
+('High footfall near Anna Nagar Tower Park', ST_SetSRID(ST_MakePoint(80.2110, 13.0850), 4326)::geography, 240),
+('Overflow reports from T Nagar Ranganathan St', ST_SetSRID(ST_MakePoint(80.2315, 13.0330), 4326)::geography, 240),
+('New apartments in Adyar', ST_SetSRID(ST_MakePoint(80.2580, 13.0060), 4326)::geography, 120),
+('Mylapore temple surroundings', ST_SetSRID(ST_MakePoint(80.2700, 13.0340), 4326)::geography, 120),
+('Velachery MRTS station entry', ST_SetSRID(ST_MakePoint(80.2170, 12.9770), 4326)::geography, 240),
+('Guindy Industrial Estate corner', ST_SetSRID(ST_MakePoint(80.2080, 13.0120), 4326)::geography, 240),
+('Ashok Pillar junction', ST_SetSRID(ST_MakePoint(80.2140, 13.0370), 4326)::geography, 120),
+('Vadapalani bus terminus', ST_SetSRID(ST_MakePoint(80.2120, 13.0480), 4326)::geography, 240),
+('Purasawalkam market area', ST_SetSRID(ST_MakePoint(80.2480, 13.0900), 4326)::geography, 240),
+('Thiruvanmiyur beach entrance', ST_SetSRID(ST_MakePoint(80.2640, 12.9830), 4326)::geography, 120),
+('Pallavaram market', ST_SetSRID(ST_MakePoint(80.1450, 12.9680), 4326)::geography, 240),
+('Saidapet market', ST_SetSRID(ST_MakePoint(80.2270, 13.0200), 4326)::geography, 120),
+('Royapuram fishing harbour', ST_SetSRID(ST_MakePoint(80.2970, 13.1180), 4326)::geography, 240),
+('Tondiarpet residential block', ST_SetSRID(ST_MakePoint(80.2850, 13.1250), 4326)::geography, 120),
+('KK Nagar PSBB school corner', ST_SetSRID(ST_MakePoint(80.2040, 13.0410), 4326)::geography, 120),
+('Tambaram new bus stand', ST_SetSRID(ST_MakePoint(80.1150, 12.9250), 4326)::geography, 240),
+('Chromepet residential area', ST_SetSRID(ST_MakePoint(80.1400, 12.9550), 4326)::geography, 120),
+('Nungambakkam High Road junction', ST_SetSRID(ST_MakePoint(80.2440, 13.0600), 4326)::geography, 120),
+('Besant Nagar beach front', ST_SetSRID(ST_MakePoint(80.2720, 13.0080), 4326)::geography, 240),
+('OMR Food Street Sholinganallur', ST_SetSRID(ST_MakePoint(80.2280, 12.8980), 4326)::geography, 240),
+('Anna Nagar 2nd Ave', ST_SetSRID(ST_MakePoint(80.2150, 13.0830), 4326)::geography, 120),
+('Panagal Park T Nagar', ST_SetSRID(ST_MakePoint(80.2330, 13.0380), 4326)::geography, 240),
+('Adyar Ananda Bhavan corner', ST_SetSRID(ST_MakePoint(80.2550, 13.0040), 4326)::geography, 120),
+('Mylapore Luz Church Road', ST_SetSRID(ST_MakePoint(80.2650, 13.0360), 4326)::geography, 120),
+('Velachery 100ft Road', ST_SetSRID(ST_MakePoint(80.2200, 12.9800), 4326)::geography, 120),
+('Guindy Race Course area', ST_SetSRID(ST_MakePoint(80.2050, 13.0080), 4326)::geography, 120),
+('Ashok Nagar park', ST_SetSRID(ST_MakePoint(80.2120, 13.0390), 4326)::geography, 120),
+('Vadapalani Forum Mall back gate', ST_SetSRID(ST_MakePoint(80.2090, 13.0490), 4326)::geography, 240),
+('Purasawalkam high road', ST_SetSRID(ST_MakePoint(80.2460, 13.0910), 4326)::geography, 120),
+('Thiruvanmiyur Kalakshetra', ST_SetSRID(ST_MakePoint(80.2600, 12.9880), 4326)::geography, 120),
+('Pallavaram sandhai', ST_SetSRID(ST_MakePoint(80.1470, 12.9690), 4326)::geography, 240),
+('Saidapet new bridge', ST_SetSRID(ST_MakePoint(80.2290, 13.0210), 4326)::geography, 120),
+('Royapuram new apartments', ST_SetSRID(ST_MakePoint(80.2950, 13.1150), 4326)::geography, 120),
+('Tondiarpet slum area', ST_SetSRID(ST_MakePoint(80.2830, 13.1280), 4326)::geography, 120),
+('KK Nagar new complex', ST_SetSRID(ST_MakePoint(80.2060, 13.0420), 4326)::geography, 120),
+('Tambaram market', ST_SetSRID(ST_MakePoint(80.1120, 12.9280), 4326)::geography, 240),
+('Chromepet hospital road', ST_SetSRID(ST_MakePoint(80.1420, 12.9560), 4326)::geography, 120),
+('Nungambakkam restaurants', ST_SetSRID(ST_MakePoint(80.2420, 13.0610), 4326)::geography, 120),
+('Besant Nagar Elliots Beach', ST_SetSRID(ST_MakePoint(80.2740, 13.0100), 4326)::geography, 240),
+('Sholinganallur junction', ST_SetSRID(ST_MakePoint(80.2270, 12.8950), 4326)::geography, 240),
+('Anna Nagar East', ST_SetSRID(ST_MakePoint(80.2180, 13.0840), 4326)::geography, 120),
+('T Nagar Usman Road', ST_SetSRID(ST_MakePoint(80.2300, 13.0360), 4326)::geography, 240),
+('Adyar Gandhi Nagar', ST_SetSRID(ST_MakePoint(80.2590, 13.0070), 4326)::geography, 120),
+('Mylapore Mandaveli market', ST_SetSRID(ST_MakePoint(80.2680, 13.0290), 4326)::geography, 120),
+('Velachery Phoenix Mall area', ST_SetSRID(ST_MakePoint(80.2150, 12.9900), 4326)::geography, 240),
+('Guindy Olympia Tech Park', ST_SetSRID(ST_MakePoint(80.2030, 13.0100), 4326)::geography, 240),
+('Ashok Nagar metro', ST_SetSRID(ST_MakePoint(80.2100, 13.0380), 4326)::geography, 120),
+('Vadapalani Murugan Temple', ST_SetSRID(ST_MakePoint(80.2130, 13.0500), 4326)::geography, 120),
+('Purasawalkam Doveton', ST_SetSRID(ST_MakePoint(80.2500, 13.0920), 4326)::geography, 120);
+
+-- -----------------------------
+-- Sample Maintenance (50 Records)
+-- (Uses Bins 1-60 and User 4 'manager1')
+-- -----------------------------
+INSERT INTO maintenance (bin_id, scheduled_date, completed_date, maintenance_type, description, technician_id, cost, status)
+VALUES
+(3, '2025-10-25 10:00:00', NULL, 'Repair', 'Bin sensor faulty (Sensor ID 3)', 4, 150.00, 'scheduled'),
+(10, '2025-10-20 09:00:00', '2025-10-20 11:00:00', 'Cleaning', 'Routine deep clean', 4, 50.00, 'completed'),
+(45, '2025-10-24 14:00:00', NULL, 'Repair', 'Lid hinge broken', 4, 75.00, 'in_progress'),
+(5, '2025-10-21 10:00:00', '2025-10-21 11:30:00', 'Painting', 'Graffiti removal', 4, 60.00, 'completed'),
+(18, '2025-10-27 09:00:00', NULL, 'Battery Replacement', 'Sensor battery low (Bin 18)', 4, 40.00, 'scheduled'),
+(33, '2025-10-22 13:00:00', '2025-10-22 14:00:00', 'Cleaning', 'Bin overflowing, needs cleanup', 4, 50.00, 'completed'),
+(59, '2025-10-28 10:00:00', NULL, 'Repair', 'Structural damage (dented)', 4, 180.00, 'scheduled'),
+(1, '2025-10-23 15:00:00', '2025-10-23 15:30:00', 'Calibration', 'Weight sensor calibration', 4, 30.00, 'completed'),
+(40, '2025-10-29 11:00:00', NULL, 'Cleaning', 'Routine deep clean', 4, 50.00, 'scheduled'),
+(12, '2025-10-24 09:00:00', NULL, 'Repair', 'Lid stuck', 4, 65.00, 'in_progress'),
+(7, '2025-10-19 10:00:00', '2025-10-19 11:00:00', 'Sensor Replacement', 'Old sensor replaced', 4, 120.00, 'completed'),
+(25, '2025-10-30 10:00:00', NULL, 'Cleaning', 'Routine deep clean', 4, 50.00, 'scheduled'),
+(51, '2025-10-25 11:00:00', NULL, 'Painting', 'Repaint required', 4, 60.00, 'scheduled'),
+(30, '2025-10-18 14:00:00', '2025-10-18 15:00:00', 'Battery Replacement', 'Sensor battery died', 4, 40.00, 'completed'),
+(15, '2025-10-31 09:00:00', NULL, 'Repair', 'Reported crack in base', 4, 160.00, 'scheduled'),
+(42, '2025-10-26 13:00:00', NULL, 'Cleaning', 'Bin blocked, requires moving and cleaning', 4, 70.00, 'scheduled'),
+(8, '2025-10-24 10:00:00', NULL, 'Calibration', 'Fill level sensor inaccurate', 4, 30.00, 'in_progress'),
+(20, '2025-10-17 11:00:00', '2025-10-17 12:00:00', 'Cleaning', 'Routine deep clean', 4, 50.00, 'completed'),
+(37, '2025-11-01 10:00:00', NULL, 'Sensor Replacement', 'Sensor offline', 4, 120.00, 'scheduled'),
+(48, '2025-10-27 14:00:00', NULL, 'Repair', 'Wheel broken', 4, 80.00, 'scheduled'),
+(2, '2025-10-16 09:00:00', '2025-10-16 10:30:00', 'Painting', 'Graffiti removal', 4, 60.00, 'completed'),
+(29, '2025-10-24 11:00:00', NULL, 'Cleaning', 'Routine deep clean', 4, 50.00, 'in_progress'),
+(55, '2025-10-15 13:00:00', '2025-10-15 14:00:00', 'Repair', 'Lid hinge broken', 4, 75.00, 'completed'),
+(14, '2025-11-02 10:00:00', NULL, 'Cleaning', 'Routine deep clean', 4, 50.00, 'scheduled'),
+(32, '2025-10-29 13:00:00', NULL, 'Sensor Replacement', 'Weight sensor inaccurate', 4, 120.00, 'scheduled'),
+(19, '2025-11-03 10:00:00', NULL, 'Repair', 'Structural damage (dented)', 4, 180.00, 'scheduled'),
+(50, '2025-10-20 14:00:00', '2025-10-20 14:30:00', 'Calibration', 'Fill level sensor calibration', 4, 30.00, 'completed'),
+(38, '2025-10-25 14:00:00', NULL, 'Painting', 'Repaint required', 4, 60.00, 'scheduled'),
+(4, '2025-10-21 09:00:00', '2025-10-21 10:00:00', 'Repair', 'Lid stuck', 4, 65.00, 'completed'),
+(44, '2025-10-27 15:00:00', NULL, 'Cleaning', 'Bin blocked, requires moving and cleaning', 4, 70.00, 'scheduled'),
+(13, '2025-10-22 10:00:00', '2025-10-22 11:00:00', 'Battery Replacement', 'Sensor battery died', 4, 40.00, 'completed'),
+(35, '2025-11-05 09:00:00', NULL, 'Repair', 'Reported crack in base', 4, 160.00, 'scheduled'),
+(52, '2025-10-24 13:00:00', NULL, 'Calibration', 'Weight sensor calibration', 4, 30.00, 'in_progress'),
+(21, '2025-10-23 11:00:00', '2025-10-23 12:00:00', 'Cleaning', 'Routine deep clean', 4, 50.00, 'completed'),
+(47, '2025-10-31 11:00:00', NULL, 'Repair', 'Wheel broken', 4, 80.00, 'scheduled'),
+(60, '2025-10-19 13:00:00', '2025-10-19 14:30:00', 'Sensor Replacement', 'Old sensor replaced', 4, 120.00, 'completed'),
+(9, '2025-11-01 11:00:00', NULL, 'Painting', 'Graffiti removal', 4, 60.00, 'scheduled'),
+(27, '2025-10-26 15:00:00', NULL, 'Battery Replacement', 'Sensor battery low (Bin 27)', 4, 40.00, 'scheduled'),
+(36, '2025-10-20 10:00:00', '2025-10-20 11:00:00', 'Cleaning', 'Routine deep clean', 4, 50.00, 'completed'),
+(17, '2025-10-28 14:00:00', NULL, 'Calibration', 'Fill level sensor inaccurate', 4, 30.00, 'scheduled'),
+(43, '2025-10-24 14:00:00', '2025-10-24 15:00:00', 'Cleaning', 'Bin overflowing, needs cleanup', 4, 50.00, 'completed'),
+(26, '2025-11-03 11:00:00', NULL, 'Sensor Replacement', 'Sensor offline', 4, 120.00, 'scheduled'),
+(39, '2025-10-29 15:00:00', NULL, 'Repair', 'Lid hinge broken', 4, 75.00, 'scheduled'),
+(58, '2025-10-23 13:00:00', '2025-10-23 13:30:00', 'Battery Replacement', 'Sensor battery died', 4, 40.00, 'completed');
+
+-- -----------------------------
+-- Sample Routes (50 Routes)
+-- (Created by User 1 'admin1' or User 4 'manager1')
+-- -----------------------------
+INSERT INTO routes (name, description, created_by, estimated_duration, status)
+VALUES
+('Anna Nagar Morning 1', 'Standard collection for Anna Nagar Ward', 1, '2 hours', 'active'),
+('T Nagar Morning 1', 'Standard collection for T Nagar Ward', 1, '3 hours', 'active'),
+('Adyar Morning 1', 'Standard collection for Adyar Ward', 1, '2 hours', 'active'),
+('Mylapore Morning 1', 'Standard collection for Mylapore Ward', 4, '2 hours', 'active'),
+('Velachery Morning 1', 'Standard collection for Velachery Ward', 4, '3 hours', 'planned'),
+('Guindy Industrial 1', 'Commercial collection for Guindy', 1, '4 hours', 'active'),
+('Ashok Nagar Noon 1', 'Standard collection for Ashok Nagar Ward', 1, '2 hours', 'active'),
+('Vadapalani Noon 1', 'Standard collection for Vadapalani Ward', 4, '2 hours', 'planned'),
+('Purasawalkam Noon 1', 'Standard collection for Purasawalkam', 1, '3 hours', 'active'),
+('Thiruvanmiyur Morning 1', 'Standard collection for Thiruvanmiyur', 4, '2 hours', 'planned'),
+('Pallavaram Main Road', 'Standard collection for Pallavaram', 1, '3 hours', 'active'),
+('Saidapet Morning 1', 'Standard collection for Saidapet Ward', 1, '2 hours', 'active'),
+('Royapuram Morning 1', 'Standard collection for Royapuram Ward', 4, '3 hours', 'planned'),
+('Tondiarpet Noon 1', 'Standard collection for Tondiarpet', 1, '3 hours', 'active'),
+('KK Nagar Morning 1', 'Standard collection for KK Nagar Ward', 4, '2 hours', 'planned'),
+('Anna Nagar Recycling 1', 'Recyclables pickup for Anna Nagar', 1, '2 hours', 'active'),
+('T Nagar Recycling 1', 'Recyclables pickup for T Nagar', 1, '3 hours', 'active'),
+('Adyar Recycling 1', 'Recyclables pickup for Adyar', 4, '2 hours', 'planned'),
+('Mylapore Recycling 1', 'Recyclables pickup for Mylapore', 1, '2 hours', 'active'),
+('Velachery Recycling 1', 'Recyclables pickup for Velachery', 4, '3 hours', 'planned'),
+('Tambaram Route 1', 'Standard collection for Tambaram', 1, '4 hours', 'active'),
+('Chromepet Route 1', 'Standard collection for Chromepet', 1, '3 hours', 'active'),
+('Nungambakkam Route 1', 'Commercial collection for Nungambakkam', 4, '2 hours', 'planned'),
+('Besant Nagar Route 1', 'Standard collection for Besant Nagar', 1, '2 hours', 'active'),
+('Sholinganallur OMR 1', 'Commercial collection for OMR', 1, '4 hours', 'active'),
+('Anna Nagar Evening 1', 'Evening collection for Anna Nagar markets', 4, '2 hours', 'planned'),
+('T Nagar Evening 1 (Commercial)', 'Commercial collection for Ranganathan St', 1, '3 hours', 'active'),
+('Adyar Organic 1', 'Organic waste pickup for Adyar', 1, '2 hours', 'active'),
+('Mylapore Temple Route', 'Special collection for temple areas', 4, '2 hours', 'planned'),
+('Velachery IT Route', 'Commercial collection for IT parks', 1, '3 hours', 'active'),
+('Guindy Industrial 2', 'Afternoon commercial collection for Guindy', 1, '4 hours', 'active'),
+('Ashok Nagar Recycling 1', 'Recyclables pickup for Ashok Nagar', 4, '2 hours', 'planned'),
+('Vadapalani Temple Route', 'Special collection for temple areas', 1, '2 hours', 'active'),
+('Purasawalkam Market', 'Evening collection for market area', 4, '3 hours', 'planned'),
+('Thiruvanmiyur Beach Route', 'Morning collection for beach front', 1, '2 hours', 'active'),
+('Pallavaram Recycling 1', 'Recyclables pickup for Pallavaram', 1, '3 hours', 'active'),
+('Saidapet Recycling 1', 'Recyclables pickup for Saidapet', 4, '2 hours', 'planned'),
+('Royapuram Harbour Route', 'Commercial collection for harbour', 1, '3 hours', 'active'),
+('Tondiarpet Recycling 1', 'Recyclables pickup for Tondiarpet', 4, '3 hours', 'planned'),
+('KK Nagar Recycling 1', 'Recyclables pickup for KK Nagar', 1, '2 hours', 'active'),
+('Tambaram Recycling 1', 'Recyclables pickup for Tambaram', 1, '4 hours', 'active'),
+('Chromepet Recycling 1', 'Recyclables pickup for Chromepet', 4, '3 hours', 'planned'),
+('Nungambakkam Recycling 1', 'Recyclables pickup for Nungambakkam', 1, '2 hours', 'active'),
+('Besant Nagar Recycling 1', 'Recyclables pickup for Besant Nagar', 4, '2 hours', 'planned'),
+('Sholinganallur OMR 2', 'Evening collection for OMR food street', 1, '4 hours', 'active'),
+('Anna Nagar Morning 2', 'Standard collection for Anna Nagar West', 1, '2 hours', 'active'),
+('T Nagar Morning 2', 'Standard collection for Panagal Park area', 1, '3 hours', 'active'),
+('Adyar Morning 2', 'Standard collection for Gandhi Nagar', 4, '2 hours', 'planned'),
+('Mylapore Morning 2', 'Standard collection for Mandaveli', 1, '2 hours', 'active');
+
+-- -----------------------------
+-- Sample Sensors (100 Sensors)
+-- Corrected to match your 100 bin IDs
+-- -----------------------------
+INSERT INTO sensors (bin_id, sensor_type, last_reading, last_reading_time, battery_level, status)
+VALUES
+(1, 'Fill Level', 85.0, '2025-10-24 10:00:00', 90, 'active'),
+(2, 'Fill Level', 92.0, '2025-10-24 10:00:00', 88, 'active'),
+(3, 'Fill Level', 78.0, '2025-10-24 10:00:00', 95, 'active'),
+(4, 'Fill Level', 100.0, '2025-10-24 10:00:00', 82, 'active'),
+(5, 'Fill Level', 63.0, '2025-10-24 10:00:00', 78, 'active'),
+(7, 'Fill Level', 55.0, '2025-10-24 10:00:00', 93, 'active'),
+(8, 'Fill Level', 89.0, '2025-10-24 10:00:00', 87, 'active'),
+(9, 'Fill Level', 12.0, '2025-10-24 10:00:00', 85, 'active'),
+(10, 'Fill Level', 76.0, '2025-10-24 10:00:00', 92, 'active'),
+(12, 'Fill Level', 34.0, '2025-10-24 10:00:00', 89, 'active'),
+(13, 'Fill Level', 88.0, '2025-10-24 10:00:00', 94, 'active'),
+(14, 'Fill Level', 95.0, '2025-10-24 10:00:00', 86, 'active'),
+(15, 'Fill Level', 81.0, '2025-10-24 10:00:00', 91, 'active'),
+(16, 'Fill Level', 77.0, '2025-10-24 10:00:00', 83, 'active'),
+(17, 'Fill Level', 90.0, '2025-10-24 10:00:00', 88, 'active'),
+(18, 'Fill Level', 86.0, '2025-10-24 10:00:00', 95, 'active'),
+(19, 'Fill Level', 42.0, '2025-10-24 10:00:00', 81, 'active'),
+(20, 'Fill Level', 100.0, '2025-10-24 10:00:00', 79, 'active'),
+(21, 'Fill Level', 79.0, '2025-10-24 10:00:00', 90, 'active'),
+(24, 'Fill Level', 87.0, '2025-10-24 10:00:00', 82, 'active'),
+(25, 'Fill Level', 73.0, '2025-10-24 10:00:00', 78, 'active'),
+(26, 'Fill Level', 98.0, '2025-10-24 10:00:00', 91, 'active'),
+(27, 'Fill Level', 68.0, '2025-10-24 10:00:00', 93, 'active'),
+(29, 'Fill Level', 70.0, '2025-10-24 10:00:00', 85, 'active'),
+(30, 'Fill Level', 93.0, '2025-10-24 10:00:00', 92, 'active'),
+(31, 'Fill Level', 15.0, '2025-10-24 10:00:00', 80, 'active'),
+(32, 'Fill Level', 80.0, '2025-10-24 10:00:00', 89, 'active'),
+(33, 'Fill Level', 45.0, '2025-10-24 10:00:00', 94, 'active'),
+(34, 'Fill Level', 91.0, '2025-10-24 10:00:00', 86, 'active'),
+(35, 'Fill Level', 100.0, '2025-10-24 10:00:00', 91, 'active'),
+(36, 'Fill Level', 74.0, '2025-10-24 10:00:00', 83, 'active'),
+(37, 'Fill Level', 83.0, '2025-10-24 10:00:00', 88, 'active'),
+(38, 'Fill Level', 96.0, '2025-10-24 10:00:00', 95, 'active'),
+(39, 'Fill Level', 88.0, '2025-10-24 10:00:00', 81, 'active'),
+(40, 'Fill Level', 100.0, '2025-10-24 10:00:00', 79, 'active'),
+(42, 'Fill Level', 90.0, '2025-10-24 10:00:00', 90, 'active'),
+(43, 'Fill Level', 85.0, '2025-10-24 10:00:00', 88, 'active'),
+(44, 'Fill Level', 95.0, '2025-10-24 10:00:00', 95, 'active'),
+(45, 'Fill Level', 60.0, '2025-10-24 10:00:00', 82, 'active'),
+(47, 'Fill Level', 91.0, '2025-10-24 10:00:00', 78, 'active'),
+(48, 'Fill Level', 99.0, '2025-10-24 10:00:00', 91, 'active'),
+(49, 'Fill Level', 53.0, '2025-10-24 10:00:00', 93, 'active'),
+(50, 'Fill Level', 84.0, '2025-10-24 10:00:00', 87, 'active'),
+(51, 'Fill Level', 38.0, '2025-10-24 10:00:00', 85, 'active'),
+(52, 'Fill Level', 86.0, '2025-10-24 10:00:00', 92, 'active'),
+(53, 'Fill Level', 77.0, '2025-10-24 10:00:00', 80, 'active'),
+(55, 'Fill Level', 81.0, '2025-10-24 10:00:00', 89, 'active'),
+(57, 'Fill Level', 100.0, '2025-10-24 10:00:00', 94, 'active'),
+(58, 'Fill Level', 89.0, '2025-10-24 10:00:00', 86, 'active'),
+(59, 'Fill Level', 74.0, '2025-10-24 10:00:00', 91, 'active'),
+(60, 'Fill Level', 65.0, '2025-10-24 10:00:00', 83, 'active'),
+(61, 'Fill Level', 92.0, '2025-10-24 10:00:00', 88, 'active'),
+(62, 'Fill Level', 83.0, '2025-10-24 10:00:00', 95, 'active'),
+(63, 'Fill Level', 100.0, '2025-10-24 10:00:00', 81, 'active'),
+(64, 'Fill Level', 72.0, '2025-10-24 10:00:00', 79, 'active'),
+(65, 'Fill Level', 80.0, '2025-10-24 10:00:00', 90, 'active'),
+(66, 'Fill Level', 98.0, '2025-10-24 10:00:00', 88, 'active'),
+(67, 'Fill Level', 49.0, '2025-10-24 10:00:00', 95, 'active'),
+(68, 'Fill Level', 87.0, '2025-10-24 10:00:00', 82, 'active'),
+(69, 'Fill Level', 75.0, '2025-10-24 10:00:00', 78, 'active'),
+(70, 'Fill Level', 84.0, '2025-10-24 10:00:00', 91, 'active'),
+(71, 'Fill Level', 90.0, '2025-10-24 10:00:00', 93, 'active'),
+(72, 'Fill Level', 100.0, '2025-10-24 10:00:00', 87, 'active'),
+(73, 'Fill Level', 79.0, '2025-10-24 10:00:00', 85, 'active'),
+(74, 'Fill Level', 95.0, '2025-10-24 10:00:00', 92, 'active'),
+(75, 'Fill Level', 88.0, '2025-10-24 10:00:00', 80, 'active'),
+(77, 'Fill Level', 92.0, '2025-10-24 10:00:00', 89, 'active'),
+(78, 'Fill Level', 63.0, '2025-10-24 10:00:00', 94, 'active'),
+(79, 'Fill Level', 100.0, '2025-10-24 10:00:00', 86, 'active'),
+(80, 'Fill Level', 81.0, '2025-10-24 10:00:00', 91, 'active'),
+(81, 'Fill Level', 76.0, '2025-10-24 10:00:00', 83, 'active'),
+(83, 'Fill Level', 86.0, '2025-10-24 10:00:00', 88, 'active'),
+(84, 'Fill Level', 55.0, '2025-10-24 10:00:00', 95, 'active'),
+(86, 'Fill Level', 90.0, '2025-10-24 10:00:00', 81, 'active'),
+(87, 'Fill Level', 77.0, '2025-10-24 10:00:00', 79, 'active'),
+(88, 'Fill Level', 93.0, '2025-10-24 10:00:00', 90, 'active'),
+(89, 'Fill Level', 82.0, '2025-10-24 10:00:00', 88, 'active'),
+(90, 'Fill Level', 100.0, '2025-10-24 10:00:00', 95, 'active'),
+(91, 'Fill Level', 71.0, '2025-10-24 10:00:00', 82, 'active'),
+(93, 'Fill Level', 85.0, '2025-10-24 10:00:00', 78, 'active'),
+(94, 'Fill Level', 74.0, '2025-10-24 10:00:00', 91, 'active'),
+(95, 'Fill Level', 83.0, '2025-10-24 10:00:00', 93, 'active'),
+(98, 'Fill Level', 80.0, '2025-10-24 10:00:00', 87, 'active'),
+(99, 'Fill Level', 72.0, '2025-10-24 10:00:00', 85, 'active'),
+(100, 'Fill Level', 95.0, '2025-10-24 10:00:00', 92, 'active'),
+(101, 'Fill Level', 86.0, '2025-10-24 10:00:00', 80, 'active'),
+(102, 'Fill Level', 77.0, '2025-10-24 10:00:00', 89, 'active'),
+(103, 'Fill Level', 93.0, '2025-10-24 10:00:00', 94, 'active'),
+(104, 'Fill Level', 81.0, '2025-10-24 10:00:00', 86, 'active'),
+(105, 'Fill Level', 100.0, '2025-10-24 10:00:00', 91, 'active'),
+(107, 'Fill Level', 85.0, '2025-10-24 10:00:00', 83, 'active'),
+(109, 'Fill Level', 92.0, '2025-10-24 10:00:00', 88, 'active'),
+(110, 'Fill Level', 63.0, '2025-10-24 10:00:00', 95, 'active'),
+(111, 'Fill Level', 88.0, '2025-10-24 10:00:00', 81, 'active'),
+(112, 'Fill Level', 79.0, '2025-10-24 10:00:00', 79, 'active'),
+(113, 'Fill Level', 95.0, '2025-10-24 10:00:00', 90, 'active'),
+(114, 'Fill Level', 84.0, '2025-10-24 10:00:00', 88, 'active'),
+(115, 'Fill Level', 76.0, '2025-10-24 10:00:00', 95, 'active'),
+(116, 'Fill Level', 91.0, '2025-10-24 10:00:00', 82, 'active'),
+(117, 'Fill Level', 83.0, '2025-10-24 10:00:00', 78, 'active'),
+(124, 'Fill Level', 86.0, '2025-10-24 10:00:00', 91, 'active'),
+(125, 'Fill Level', 77.0, '2025-10-24 10:00:00', 93, 'active'),
+(126, 'Fill Level', 94.0, '2025-10-24 10:00:00', 87, 'active'),
+(127, 'Fill Level', 81.0, '2025-10-24 10:00:00', 85, 'active'),
+(128, 'Fill Level', 60.0, '2025-10-24 10:00:00', 92, 'active'),
+(129, 'Fill Level', 98.0, '2025-10-24 10:00:00', 80, 'active');
+
+-- -----------------------------
+-- Sample Household-Bin Assignments (Corrected)
+-- Assigning your 240 households to your 100 bins
+-- -----------------------------
+INSERT INTO household_bin_assignments (household_id, bin_id, priority)
+VALUES
+(501, 1, 1), (502, 1, 1), (503, 2, 1), (504, 2, 1), (505, 3, 1),
+(506, 3, 1), (507, 4, 1), (508, 4, 1), (509, 5, 1), (510, 5, 1),
+(511, 7, 1), (512, 7, 1), (520, 8, 1), (521, 8, 1), (522, 9, 1),
+(523, 9, 1), (526, 10, 1), (527, 10, 1), (528, 12, 1), (529, 12, 1),
+(530, 13, 1), (531, 13, 1), (532, 14, 1), (533, 14, 1), (534, 15, 1),
+(535, 15, 1), (536, 16, 1), (537, 16, 1), (538, 17, 1), (539, 17, 1),
+(540, 18, 1), (541, 18, 1), (542, 19, 1), (547, 19, 1), (548, 20, 1),
+(549, 20, 1), (550, 21, 1), (551, 21, 1), (552, 24, 1), (553, 24, 1),
+(554, 25, 1), (555, 25, 1), (556, 26, 1), (557, 26, 1), (558, 27, 1),
+(559, 27, 1), (560, 29, 1), (561, 29, 1), (562, 30, 1), (563, 30, 1),
+(564, 31, 1), (565, 31, 1), (566, 32, 1), (567, 32, 1), (568, 33, 1),
+(569, 33, 1), (570, 34, 1), (571, 34, 1), (572, 35, 1), (573, 35, 1),
+(574, 36, 1), (575, 36, 1), (579, 37, 1), (580, 37, 1), (581, 38, 1),
+(582, 38, 1), (583, 39, 1), (584, 39, 1), (585, 40, 1), (586, 40, 1),
+(587, 42, 1), (588, 42, 1), (589, 43, 1), (590, 43, 1), (591, 44, 1),
+(592, 44, 1), (593, 45, 1), (594, 45, 1), (595, 47, 1), (596, 47, 1),
+(597, 48, 1), (598, 48, 1), (599, 49, 1), (600, 49, 1), (601, 50, 1),
+(602, 50, 1), (603, 51, 1), (604, 51, 1), (605, 52, 1), (606, 52, 1),
+(607, 53, 1), (608, 53, 1), (609, 55, 1), (610, 55, 1), (611, 57, 1),
+(612, 57, 1), (613, 58, 1), (614, 58, 1), (615, 59, 1), (616, 59, 1),
+(617, 60, 1), (618, 60, 1), (619, 61, 1), (620, 61, 1), (621, 62, 1),
+(622, 62, 1), (623, 63, 1), (624, 63, 1), (625, 64, 1), (626, 64, 1),
+(627, 65, 1), (628, 65, 1), (629, 66, 1), (630, 66, 1), (631, 67, 1),
+(632, 67, 1), (633, 68, 1), (634, 68, 1), (639, 69, 1), (640, 69, 1),
+(641, 70, 1), (642, 70, 1), (643, 71, 1), (644, 71, 1), (645, 72, 1),
+(646, 72, 1), (647, 73, 1), (648, 73, 1), (649, 74, 1), (650, 74, 1),
+(651, 75, 1), (652, 75, 1), (654, 77, 1), (659, 77, 1), (660, 78, 1),
+(661, 78, 1), (662, 79, 1), (663, 79, 1), (664, 80, 1), (665, 80, 1),
+(666, 81, 1), (667, 81, 1), (668, 83, 1), (669, 83, 1), (670, 84, 1),
+(671, 84, 1), (672, 86, 1), (673, 86, 1), (674, 87, 1), (675, 87, 1),
+(676, 88, 1), (677, 88, 1), (678, 89, 1), (679, 89, 1), (680, 90, 1),
+(681, 90, 1), (682, 91, 1), (683, 91, 1), (684, 93, 1), (685, 93, 1),
+(686, 94, 1), (691, 94, 1), (692, 95, 1), (693, 95, 1), (694, 98, 1),
+(698, 98, 1), (699, 99, 1), (700, 99, 1), (701, 100, 1), (702, 100, 1),
+(703, 101, 1), (704, 101, 1), (705, 102, 1), (706, 102, 1), (707, 103, 1),
+(708, 103, 1), (709, 104, 1), (710, 104, 1), (711, 105, 1), (712, 105, 1),
+(713, 107, 1), (714, 107, 1), (715, 109, 1), (716, 109, 1), (717, 110, 1),
+(718, 110, 1), (719, 111, 1), (720, 111, 1), (721, 112, 1), (722, 112, 1),
+(723, 113, 1), (724, 113, 1), (725, 114, 1), (726, 114, 1), (727, 115, 1),
+(728, 115, 1), (729, 116, 1), (730, 116, 1), (731, 117, 1), (732, 117, 1),
+(733, 124, 1), (734, 124, 1), (735, 125, 1), (736, 125, 1), (737, 126, 1),
+(738, 126, 1), (739, 127, 1), (740, 127, 1), (741, 128, 1), (742, 128, 1),
+(743, 129, 1), (744, 129, 1), (745, 1, 2), (746, 2, 2), (747, 3, 2),
+(748, 4, 2), (749, 5, 2), (750, 7, 2), (751, 8, 2), (752, 9, 2),
+(753, 10, 2), (754, 12, 2), (755, 13, 2), (756, 14, 2), (757, 15, 2),
+(758, 16, 2), (760, 17, 2), (762, 18, 2), (783, 19, 2), (784, 20, 2),
+(785, 21, 2), (786, 24, 2), (787, 25, 2), (788, 26, 2), (789, 27, 2),
+(790, 29, 2), (791, 30, 2), (792, 31, 2), (793, 32, 2), (794, 33, 2),
+(795, 34, 2), (796, 35, 2), (797, 36, 2), (798, 37, 2), (799, 38, 2),
+(800, 39, 2);
+
+-- -----------------------------
+-- Sample Collections (60 Collections)
+-- Corrected with your bin IDs and existing vehicle/user/waste_type IDs
+-- (Assumes waste_type IDs 1-6, vehicle IDs 1-2, collector IDs 2-3 exist)
+-- -----------------------------
+INSERT INTO collections (bin_id, vehicle_id, collector_id, collected_at, waste_amount_collected, waste_type_id, notes)
+VALUES
+(4, 1, 2, '2025-10-23 08:00:00', 95.0, 6, 'Full bin collection'),
+(20, 1, 2, '2025-10-23 08:15:00', 98.0, 6, 'Full bin collection'),
+(35, 1, 2, '2025-10-23 08:30:00', 100.0, 6, 'Full bin collection'),
+(40, 2, 3, '2025-10-23 08:45:00', 99.0, 6, 'Full bin collection'),
+(57, 2, 3, '2025-10-23 09:00:00', 100.0, 6, 'Full bin collection'),
+(63, 1, 2, '2025-10-23 09:15:00', 97.0, 6, 'Full bin collection'),
+(72, 1, 2, '2025-10-23 09:30:00', 99.0, 6, 'Full bin collection'),
+(79, 2, 3, '2025-10-23 09:45:00', 100.0, 6, 'Full bin collection'),
+(90, 2, 3, '2025-10-23 10:00:00', 98.0, 6, 'Full bin collection'),
+(105, 1, 2, '2025-10-23 10:15:00', 100.0, 6, 'Full bin collection'),
+(2, 1, 2, '2025-10-23 10:30:00', 90.0, 6, 'Scheduled collection'),
+(14, 2, 3, '2025-10-23 10:45:00', 92.0, 2, 'Recycling collection'),
+(26, 1, 2, '2025-10-23 11:00:00', 95.0, 6, 'Scheduled collection'),
+(30, 2, 3, '2025-10-23 11:15:00', 91.0, 6, 'Scheduled collection'),
+(34, 1, 2, '2025-10-23 11:30:00', 89.0, 6, 'Scheduled collection'),
+(38, 2, 3, '2025-10-23 11:45:00', 94.0, 6, 'Scheduled collection'),
+(44, 1, 2, '2025-10-23 12:00:00', 93.0, 2, 'Recycling collection'),
+(48, 2, 3, '2025-10-23 12:15:00', 97.0, 6, 'Scheduled collection'),
+(61, 1, 2, '2025-10-23 12:30:00', 90.0, 6, 'Scheduled collection'),
+(66, 2, 3, '2025-10-23 12:45:00', 96.0, 6, 'Scheduled collection'),
+(71, 1, 2, '2025-10-23 13:00:00', 88.0, 6, 'Scheduled collection'),
+(74, 2, 3, '2025-10-23 13:15:00', 94.0, 2, 'Recycling collection'),
+(77, 1, 2, '2025-10-23 13:30:00', 90.0, 6, 'Scheduled collection'),
+(88, 2, 3, '2025-10-23 13:45:00', 91.0, 6, 'Scheduled collection'),
+(100, 1, 2, '2025-10-23 14:00:00', 93.0, 2, 'Recycling collection'),
+(103, 2, 3, '2025-10-23 14:15:00', 92.0, 6, 'Scheduled collection'),
+(109, 1, 2, '2025-10-23 14:30:00', 90.0, 6, 'Scheduled collection'),
+(113, 2, 3, '2025-10-23 14:45:00', 94.0, 2, 'Recycling collection'),
+(116, 1, 2, '2025-10-23 15:00:00', 89.0, 6, 'Scheduled collection'),
+(126, 2, 3, '2025-10-23 15:15:00', 92.0, 6, 'Scheduled collection'),
+(129, 1, 2, '2025-10-23 15:30:00', 97.0, 6, 'Scheduled collection'),
+(1, 1, 2, '2025-10-22 08:00:00', 80.0, 6, 'Regular pickup'),
+(3, 2, 3, '2025-10-22 08:15:00', 75.0, 1, 'Organic pickup'),
+(5, 1, 2, '2025-10-22 08:30:00', 60.0, 6, 'Regular pickup'),
+(7, 2, 3, '2025-10-22 08:45:00', 50.0, 6, 'Regular pickup'),
+(8, 1, 2, '2025-10-22 09:00:00', 85.0, 6, 'Regular pickup'),
+(9, 2, 3, '2025-10-22 09:15:00', 10.0, 6, 'Regular pickup'),
+(10, 1, 2, '2025-10-22 09:30:00', 70.0, 2, 'Recycling pickup'),
+(12, 2, 3, '2025-10-22 09:45:00', 30.0, 6, 'Regular pickup'),
+(13, 1, 2, '2025-10-22 10:00:00', 85.0, 6, 'Regular pickup'),
+(15, 2, 3, '2025-10-22 10:15:00', 78.0, 6, 'Regular pickup'),
+(16, 1, 2, '2025-10-22 10:30:00', 75.0, 1, 'Organic pickup'),
+(17, 2, 3, '2025-10-22 10:45:00', 88.0, 6, 'Regular pickup'),
+(18, 1, 2, '2025-10-22 11:00:00', 82.0, 6, 'Regular pickup'),
+(19, 2, 3, '2025-10-22 11:15:00', 40.0, 3, 'Paper recycling'),
+(21, 1, 2, '2025-10-22 11:30:00', 75.0, 6, 'Regular pickup'),
+(24, 2, 3, '2025-10-22 11:45:00', 85.0, 6, 'Regular pickup'),
+(25, 1, 2, '2025-10-22 12:00:00', 70.0, 6, 'Regular pickup'),
+(27, 2, 3, '2025-10-22 12:15:00', 65.0, 6, 'Regular pickup'),
+(29, 1, 2, '2025-10-22 12:30:00', 68.0, 1, 'Organic pickup'),
+(31, 2, 3, '2025-10-22 12:45:00', 12.0, 6, 'Regular pickup'),
+(32, 1, 2, '2025-10-22 13:00:00', 78.0, 6, 'Regular pickup'),
+(33, 2, 3, '2025-10-22 13:15:00', 40.0, 6, 'Regular pickup'),
+(36, 1, 2, '2025-10-22 13:30:00', 70.0, 6, 'Regular pickup'),
+(37, 2, 3, '2025-10-22 13:45:00', 80.0, 6, 'Regular pickup'),
+(39, 1, 2, '2025-10-22 14:00:00', 85.0, 1, 'Organic pickup'),
+(42, 2, 3, '2025-10-22 14:15:00', 88.0, 6, 'Regular pickup'),
+(43, 1, 2, '2025-10-22 14:30:00', 82.0, 6, 'Regular pickup'),
+(45, 2, 3, '2025-10-22 14:45:00', 55.0, 6, 'Regular pickup'),
+(47, 1, 2, '2025-10-22 15:00:00', 89.0, 6, 'Regular pickup');
+
+-- -----------------------------
+-- Sample Route-Bins (Corrected)
+-- Assigning your 100 bins across the 15 routes
+-- (Assumes route IDs 1-15 exist)
+-- -----------------------------
+INSERT INTO route_bins (route_id, bin_id, sequence_order)
+VALUES
+(1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5), (1, 7, 6), (1, 8, 7),
+(2, 9, 1), (2, 10, 2), (2, 12, 3), (2, 13, 4), (2, 14, 5), (2, 15, 6), (2, 16, 7),
+(3, 17, 1), (3, 18, 2), (3, 19, 3), (3, 20, 4), (3, 21, 5), (3, 24, 6),
+(4, 25, 1), (4, 26, 2), (4, 27, 3), (4, 29, 4), (4, 30, 5), (4, 31, 6),
+(5, 32, 1), (5, 33, 2), (5, 34, 3), (5, 35, 4), (5, 36, 5), (5, 37, 6),
+(6, 38, 1), (6, 39, 2), (6, 40, 3), (6, 42, 4), (6, 43, 5), (6, 44, 6), (6, 45, 7),
+(7, 47, 1), (7, 48, 2), (7, 49, 3), (7, 50, 4), (7, 51, 5), (7, 52, 6),
+(8, 53, 1), (8, 55, 2), (8, 57, 3), (8, 58, 4), (8, 59, 5), (8, 60, 6),
+(9, 61, 1), (9, 62, 2), (9, 63, 3), (9, 64, 4), (9, 65, 5), (9, 66, 6), (9, 67, 7),
+(10, 68, 1), (10, 69, 2), (10, 70, 3), (10, 71, 4), (10, 72, 5), (10, 73, 6),
+(11, 74, 1), (11, 75, 2), (11, 77, 3), (11, 78, 4), (11, 79, 5), (11, 80, 6),
+(12, 81, 1), (12, 83, 2), (12, 84, 3), (12, 86, 4), (12, 87, 5), (12, 88, 6), (12, 89, 7),
+(13, 90, 1), (13, 91, 2), (13, 93, 3), (13, 94, 4), (13, 95, 5), (13, 98, 6),
+(14, 99, 1), (14, 100, 2), (14, 101, 3), (14, 102, 4), (14, 103, 5), (14, 104, 6),
+(15, 105, 1), (15, 107, 2), (15, 109, 3), (15, 110, 4), (15, 111, 5), (15, 112, 6), 
+(15, 113, 7), (15, 114, 8), (15, 115, 9), (15, 116, 10), (15, 117, 11), (15, 124, 12), 
+(15, 125, 13), (15, 126, 14), (15, 127, 15), (15, 128, 16), (15, 129, 17);
+-- -----------------------------
+-- Sample Time Dimension (10 days)
+-- -----------------------------
+INSERT INTO time_dimension (date, year, month, day, weekday, week_of_year, quarter)
+VALUES
+('2025-10-15', 2025, 10, 15, 'Wednesday', 42, 4), -- ID: 1
+('2025-10-16', 2025, 10, 16, 'Thursday', 42, 4),  -- ID: 2
+('2025-10-17', 2025, 10, 17, 'Friday', 42, 4),    -- ID: 3
+('2025-10-18', 2025, 10, 18, 'Saturday', 42, 4),  -- ID: 4
+('2025-10-19', 2025, 10, 19, 'Sunday', 42, 4),    -- ID: 5
+('2025-10-20', 2025, 10, 20, 'Monday', 43, 4),    -- ID: 6
+('2025-10-21', 2025, 10, 21, 'Tuesday', 43, 4),    -- ID: 7
+('2025-10-22', 2025, 10, 22, 'Wednesday', 43, 4), -- ID: 8
+('2025-10-23', 2025, 10, 23, 'Thursday', 43, 4),  -- ID: 9
+('2025-10-24', 2025, 10, 24, 'Friday', 43, 4);      -- ID: 10
+-- -----------------------------
+-- Sample Daily Waste Facts (30 facts)
+-- Corrected with your household IDs and existing time/waste_type IDs
+-- (Assumes time IDs 1-10 exist)
+-- -----------------------------
+-- -----------------------------
+-- Sample Daily Waste Facts (CORRECTED)
+-- -----------------------------
+INSERT INTO daily_waste_facts (time_id, household_id, ward, waste_generated, waste_type_id, weather_condition, temperature)
+VALUES
+(8, 501, 'Anna Nagar', 1.5, 76, 'Cloudy', 28.0),
+(8, 507, 'T Nagar', 2.3, 71, 'Cloudy', 28.0),
+(8, 520, 'Mylapore', 0.6, 76, 'Cloudy', 28.0),
+(8, 523, 'Velachery', 1.1, 76, 'Cloudy', 28.0),
+(8, 527, 'Guindy', 1.7, 72, 'Cloudy', 28.0),
+(8, 550, 'Pallavaram', 2.1, 76, 'Cloudy', 28.0),
+(8, 575, 'Velachery', 1.5, 71, 'Cloudy', 28.0),
+(8, 600, 'Ambattur', 2.0, 76, 'Cloudy', 28.0),
+(8, 650, 'Ramapuram', 0.7, 73, 'Cloudy', 28.0),
+(8, 700, 'Aminjikarai', 1.3, 76, 'Cloudy', 28.0),
+(9, 502, 'Anna Nagar', 1.1, 71, 'Sunny', 30.0),
+(9, 508, 'T Nagar', 1.0, 76, 'Sunny', 30.0),
+(9, 521, 'Mylapore', 1.9, 72, 'Sunny', 30.0),
+(9, 526, 'Velachery', 1.3, 76, 'Sunny', 30.0),
+(9, 528, 'Guindy', 0.9, 71, 'Sunny', 30.0),
+(9, 551, 'Saidapet', 1.3, 76, 'Sunny', 30.0),
+(9, 579, 'Mambalam', 1.6, 76, 'Sunny', 30.0),
+(9, 601, 'Ambattur', 1.2, 72, 'Sunny', 30.0),
+(9, 651, 'Tambaram Sanatorium', 1.4, 76, 'Sunny', 30.0),
+(9, 701, 'Aminjikarai', 2.0, 71, 'Sunny', 30.0),
+(10, 503, 'Anna Nagar', 2.0, 76, 'Rainy', 26.0),
+(10, 509, 'T Nagar', 1.7, 71, 'Rainy', 26.0),
+(10, 522, 'Mylapore', 1.5, 76, 'Rainy', 26.0),
+(10, 529, 'Guindy', 2.0, 76, 'Rainy', 26.0),
+(10, 531, 'Ashok Nagar', 1.4, 73, 'Rainy', 26.0),
+(10, 552, 'Saidapet', 2.2, 71, 'Rainy', 26.0),
+(10, 580, 'Mambalam', 1.3, 76, 'Rainy', 26.0),
+(10, 602, 'Ambattur', 1.8, 76, 'Rainy', 26.0),
+(10, 652, 'Tambaram Sanatorium', 2.1, 71, 'Rainy', 26.0),
+(10, 702, 'Aminjikarai', 0.9, 72, 'Rainy', 26.0);
+
+-- -----------------------------
+-- Sample Waste Collection Facts (30 facts)
+-- Corrected with new collection IDs (1-60) and valid bin/household IDs
+-- (Assumes time IDs 1-10 exist)
+-- -----------------------------
+-- --------------------------------------------------
+-- Sample Waste Collection Facts (FULLY CORRECTED)
+-- - time_id 8/9 matches your time_dimension
+-- - collection_id 1-41 remapped to 301-341
+-- - waste_type_id 1/2/6 remapped to 71/72/76
+-- --------------------------------------------------
+INSERT INTO waste_collection_facts (time_id, bin_id, household_id, collection_id, waste_type_id, waste_amount, collection_duration, distance_traveled, fuel_consumed)
+VALUES
+(9, 4, 507, 301, 76, 95.0, '00:10:00', 1.2, 0.3),
+(9, 20, 548, 302, 76, 98.0, '00:08:00', 0.9, 0.2),
+(9, 35, 572, 303, 76, 100.0, '00:11:00', 1.3, 0.4),
+(9, 40, 585, 304, 76, 99.0, '00:09:00', 1.0, 0.3),
+(9, 57, 611, 305, 76, 100.0, '00:10:00', 1.1, 0.3),
+(9, 63, 623, 306, 76, 97.0, '00:07:00', 0.8, 0.2),
+(9, 72, 645, 307, 76, 99.0, '00:09:00', 1.0, 0.3),
+(9, 79, 662, 308, 76, 100.0, '00:08:00', 0.9, 0.2),
+(9, 90, 680, 309, 76, 98.0, '00:15:00', 1.5, 0.5),
+(9, 105, 711, 310, 76, 100.0, '00:05:00', 0.6, 0.1),
+(9, 2, 503, 311, 76, 90.0, '00:09:00', 1.1, 0.3),
+(9, 14, 533, 312, 72, 92.0, '00:06:00', 0.7, 0.2),
+(9, 26, 556, 313, 76, 95.0, '00:08:00', 1.0, 0.3),
+(9, 30, 562, 314, 76, 91.0, '00:09:00', 1.1, 0.3),
+(9, 34, 570, 315, 76, 89.0, '00:05:00', 0.6, 0.1),
+(9, 38, 581, 316, 76, 94.0, '00:09:00', 1.0, 0.3),
+(9, 44, 591, 317, 72, 93.0, '00:10:00', 1.2, 0.4),
+(9, 48, 597, 318, 76, 97.0, '00:07:00', 0.8, 0.2),
+(9, 61, 619, 319, 76, 90.0, '00:08:00', 0.9, 0.2),
+(9, 66, 629, 320, 76, 96.0, '00:09:00', 1.1, 0.3),
+(8, 1, 501, 332, 76, 80.0, '00:08:00', 0.9, 0.2),
+(8, 3, 505, 333, 71, 75.0, '00:07:00', 0.8, 0.2),
+(8, 5, 509, 334, 76, 60.0, '00:06:00', 0.7, 0.2),
+(8, 7, 511, 335, 76, 50.0, '00:05:00', 0.6, 0.1),
+(8, 8, 520, 336, 76, 85.0, '00:08:00', 1.0, 0.3),
+(8, 9, 522, 337, 76, 10.0, '00:04:00', 0.5, 0.1),
+(8, 10, 526, 338, 72, 70.0, '00:07:00', 0.8, 0.2),
+(8, 12, 529, 339, 76, 30.0, '00:05:00', 0.6, 0.1),
+(8, 13, 530, 340, 76, 85.0, '00:08:00', 0.9, 0.2),
+(8, 15, 534, 341, 76, 78.0, '00:07:00', 0.8, 0.2);
