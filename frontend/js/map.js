@@ -1,12 +1,10 @@
 import {
   getHouseholds,
   getBins,
+  getVehicles,
   getFarHouseholds,
   getSuggestedBins,
-  // These imports are no longer needed here, but in ui.js
-  // getUsers,
-  // getVehicles,
-  // ...etc
+  getBinsForRoute,
 } from "./api.js";
 
 // Initialize map and EXPORT it so ui.js can use it
@@ -20,25 +18,81 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const markers = {
   households: [],
   bins: [],
+  vehicles: [],
+  maintenance: [],
+  routeBins: [], // ADDED for maintenance bins
   farHouseholds: [],
   suggested: [],
 };
 
-// Helper to clear markers
-function clearMarkers(type) {
-  markers[type].forEach((m) => map.removeLayer(m));
-  markers[type] = [];
+// Helper to clear markers - NOW EXPORTED
+export function clearMarkers(type) {
+  if (markers[type]) {
+    markers[type].forEach((m) => map.removeLayer(m));
+    markers[type] = [];
+  } else {
+    console.warn(`Marker type "${type}" does not exist to clear.`);
+  }
+}
+// --- NEW FUNCTION to clear all layers ---
+export function clearAllLayers() {
+  Object.keys(markers).forEach(type => {
+    clearMarkers(type);
+  });
 }
 
-// Load households and bins
-async function loadData() {
-  clearMarkers("households");
-  clearMarkers("bins");
+// --- NEW FUNCTION ---
+// Loads and displays the bins for a specific route
+export async function loadRouteBins(routeId) {
+  clearAllLayers(); // Clear everything from the map
+  
+  try {
+    const bins = await getBinsForRoute(routeId);
+    if (!bins || bins.length === 0) {
+      alert('This route has no bins assigned.');
+      return;
+    }
 
-  const [households, bins] = await Promise.all([getHouseholds(), getBins()]);
+    const markerGroup = []; // To calculate bounds
+    bins.forEach(bin => {
+      if (bin.location) {
+        try {
+          const { coordinates } = JSON.parse(bin.location);
+          // Create a custom numbered icon
+          const icon = L.divIcon({
+            className: 'route-bin-icon',
+            html: `<span>${bin.sequence_order}</span>`, // Show sequence number
+          });
+
+          const marker = L.marker([coordinates[1], coordinates[0]], {
+            icon: icon,
+          }).bindPopup(`<b>Sequence: ${bin.sequence_order}</b><br>Bin ID: ${bin.bin_id}<br>Status: ${bin.status}`);
+          
+          marker.addTo(map);
+          markers.routeBins.push(marker);
+          markerGroup.push([coordinates[1], coordinates[0]]);
+        } catch (e) {
+          console.error("Invalid bin location format:", bin.location);
+        }
+      }
+    });
+
+    // Zoom the map to fit all bins in the route
+    if (markerGroup.length > 0) {
+      map.fitBounds(markerGroup);
+    }
+
+  } catch (err) {
+    console.error(`Error loading route bins: ${err.message}`);
+    alert(`Could not load bins for route ${routeId}.`);
+  }
+}
+// Load households
+export async function loadHouseholdMarkers() {
+  clearMarkers("households");
+  const households = await getHouseholds();
 
   households.forEach((h) => {
-    // Check if location exists and is valid JSON
     if (h.location) {
       try {
         const { coordinates } = JSON.parse(h.location);
@@ -53,16 +107,21 @@ async function loadData() {
       }
     }
   });
+}
+
+// Load bins
+export async function loadBinMarkers() {
+  clearMarkers("bins");
+  const bins = await getBins();
 
   bins.forEach((b) => {
-    // Check if location exists and is valid JSON
     if (b.location) {
       try {
         const { coordinates } = JSON.parse(b.location);
         const marker = L.circleMarker([coordinates[1], coordinates[0]], {
-          color: "green",
+          color: "green", // Standard bin color
           radius: 7,
-        }).bindPopup(`<b>Bin:</b> ${b.id}<br>Capacity: ${b.capacity}`);
+        }).bindPopup(`<b>Bin:</b> ${b.id}<br>Capacity: ${b.capacity}<br>Status: ${b.status}`);
         marker.addTo(map);
         markers.bins.push(marker);
       } catch (e) {
@@ -72,8 +131,62 @@ async function loadData() {
   });
 }
 
+// --- NEW FUNCTION ---
+// Load ONLY bins that are marked for maintenance
+export async function loadMaintenanceMarkers() {
+  clearMarkers("maintenance");
+  const allBins = await getBins(); // Get all bins
+  
+  // Filter for bins in maintenance
+  const maintBins = allBins.filter(b => b.status === 'maintenance'); 
+
+  maintBins.forEach((b) => {
+    if (b.location) {
+      try {
+        const { coordinates } = JSON.parse(b.location);
+        const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+          color: "orange", // Use orange for maintenance
+          fillColor: "#ffA500",
+          fillOpacity: 0.8,
+          radius: 7,
+        }).bindPopup(`<b>Bin (Maintenance):</b> ${b.id}<br>Status: ${b.status}`);
+        marker.addTo(map);
+        markers.maintenance.push(marker);
+      } catch (e) {
+        console.error("Invalid bin location format:", b.location);
+      }
+    }
+  });
+}
+
+
+// Load vehicles
+export async function loadVehicleMarkers() {
+  clearMarkers("vehicles");
+  const vehicles = await getVehicles();
+
+  vehicles.forEach((v) => {
+    // Check for the location property
+    if (v.location) {
+      try {
+        const { coordinates } = JSON.parse(v.location);
+        // Using a different marker for vehicles
+        const icon = L.divIcon({ className: 'vehicle-icon', html: '🚚' });
+        const marker = L.marker([coordinates[1], coordinates[0]], {
+          icon: icon,
+        }).bindPopup(`<b>Vehicle:</b> ${v.license_plate}<br>Status: ${v.status}`);
+        marker.addTo(map);
+        markers.vehicles.push(marker);
+      } catch (e) {
+        console.error("Invalid vehicle location format:", v.location);
+      }
+    }
+  });
+}
+
+
 // Highlight far households
-async function showFarHouseholds() {
+export async function showFarHouseholds() {
   clearMarkers("farHouseholds");
   const far = await getFarHouseholds();
   far.forEach((h) => {
@@ -93,13 +206,13 @@ async function showFarHouseholds() {
   });
 }
 
-async function suggestNewBins() {
+// Suggest new bins
+export async function suggestNewBins() {
   clearMarkers("suggested");
-
   const suggestions = await getSuggestedBins();
 
   suggestions.forEach((s) => {
-    if (!s.location) return; // skip if location is null
+    if (!s.location) return; 
 
     try {
       const { coordinates } = JSON.parse(s.location);
@@ -113,15 +226,13 @@ async function suggestNewBins() {
   });
 }
 
-// --- NEW: Exportable function to add a single marker ---
 /**
  * Adds a new marker to the map.
- * @param {'household' | 'bin'} type The type of entity to add.
+ * @param {'household' | 'bin' | 'vehicle'} type The type of entity to add.
  * @param {object} entity The entity object (must have lat, lng, name/id, etc.)
  */
 export function addMapMarker(type, entity) {
   let marker;
-  // Note: entity.lat and entity.lng come from the form's hidden fields
   const lat = parseFloat(entity.lat);
   const lng = parseFloat(entity.lng);
 
@@ -144,24 +255,16 @@ export function addMapMarker(type, entity) {
     }).bindPopup(`<b>Bin:</b> ${entity.id}<br>Capacity: ${entity.capacity}`);
     marker.addTo(map);
     markers.bins.push(marker);
+  } else if (type === 'vehicle') {
+    const icon = L.divIcon({ className: 'vehicle-icon', html: '🚚' });
+    marker = L.marker([lat, lng], {
+      icon: icon,
+    }).bindPopup(`<b>Vehicle:</b> ${entity.license_plate}<br>Status: ${entity.status}`);
+    marker.addTo(map);
+    markers.vehicles.push(marker);
   }
 }
 
-
-// -----------------------
-// REMOVED Dynamic Add Bin Feature
-// -----------------------
-// This logic is now handled entirely in ui.js
-// let addingBin = false;
-// function startAddingBin() { ... }
-// map.on("click", ...);
-
-
 // Export functions for use in ui.js
-window.loadData = loadData;
 window.showFarHouseholds = showFarHouseholds;
 window.suggestNewBins = suggestNewBins;
-// window.startAddingBin = startAddingBin; // REMOVED
-
-// Initial load
-loadData();

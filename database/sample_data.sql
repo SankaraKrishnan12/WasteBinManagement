@@ -9,7 +9,7 @@ VALUES
 ('manager1', 'manager@wastebin.com', '$2b$10$dummyhash', 'manager');
 
 -- -----------------------------
--- Sample Waste Types
+-- Sample Waste Types 
 -- -----------------------------
 INSERT INTO waste_types (name, description, recyclable)
 VALUES
@@ -30,7 +30,7 @@ VALUES
 ('GHI-789', 3000, 'Truck', NULL, 'maintenance');
 
 -- -----------------------------
--- Sample Households
+-- Sample Households 1
 -- -----------------------------
 INSERT INTO households (name, ward, waste_generated_per_day, location, contact_info, household_type)
 VALUES
@@ -42,7 +42,7 @@ VALUES
 ('House F', 'Ward 3', 2.8, ST_SetSRID(ST_Point(80.2800, 13.0860), 4326)::geography, 'contactF@example.com', 'industrial');
 
 -- -----------------------------
--- Sample Bins
+-- Sample Bins 1
 -- -----------------------------
 INSERT INTO bins (capacity, last_collected, location, bin_type, fill_level, status)
 VALUES
@@ -59,7 +59,7 @@ VALUES
 ('New residential development', ST_SetSRID(ST_Point(80.2810, 13.0870), 4326)::geography, 100);
 
 -- -----------------------------
--- Sample Sensors
+-- Sample Sensors 1
 -- -----------------------------
 INSERT INTO sensors (bin_id, sensor_type, last_reading, last_reading_time, battery_level, status)
 VALUES
@@ -68,7 +68,7 @@ VALUES
 (3, 'Ultrasonic Sensor', 0.0, '2025-10-15 09:00:00', 78, 'faulty');
 
 -- -----------------------------
--- Sample Collections
+-- Sample Collections 1
 -- -----------------------------
 INSERT INTO collections (bin_id, vehicle_id, collector_id, collected_at, waste_amount_collected, waste_type_id, notes)
 VALUES
@@ -93,7 +93,7 @@ VALUES
 ('Ward 2-3 Route', 'Afternoon collection for Wards 2 and 3', 1, '3 hours', 'planned');
 
 -- -----------------------------
--- Sample Household-Bin Assignments
+-- Sample Household-Bin Assignments 1
 -- -----------------------------
 INSERT INTO household_bin_assignments (household_id, bin_id, priority)
 VALUES
@@ -105,7 +105,7 @@ VALUES
 (6, 2, 1);
 
 -- -----------------------------
--- Sample Route-Bins
+-- Sample Route-Bins 1
 -- -----------------------------
 INSERT INTO route_bins (route_id, bin_id, sequence_order, estimated_arrival_time)
 VALUES
@@ -114,7 +114,7 @@ VALUES
 (2, 2, 1, '2025-10-16 14:00:00');
 
 -- -----------------------------
--- Sample Time Dimension (for a few days)
+-- Sample Time Dimension (for a few days) 1
 -- -----------------------------
 INSERT INTO time_dimension (date, year, month, day, weekday, week_of_year, quarter)
 VALUES
@@ -123,7 +123,7 @@ VALUES
 ('2025-10-16', 2025, 10, 16, 'Thursday', 42, 4);
 
 -- -----------------------------
--- Sample Waste Collection Facts
+-- Sample Waste Collection Facts 1
 -- -----------------------------
 INSERT INTO waste_collection_facts (time_id, bin_id, household_id, collection_id, waste_type_id, waste_amount, collection_duration, distance_traveled, fuel_consumed)
 VALUES
@@ -132,7 +132,7 @@ VALUES
 (1, 1, 1, 3, 6, 38.0, '00:18:00', 2.8, 1.3);
 
 -- -----------------------------
--- Sample Daily Waste Facts
+-- Sample Daily Waste Facts 1
 -- -----------------------------
 INSERT INTO daily_waste_facts (time_id, household_id, ward, waste_generated, waste_type_id, weather_condition, temperature)
 VALUES
