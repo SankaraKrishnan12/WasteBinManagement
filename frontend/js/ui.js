@@ -22,8 +22,10 @@ import {
   loadHouseholdMarkers,
   loadBinMarkers,
   loadVehicleMarkers,
-  loadMaintenanceMarkers, // IMPORTED
-  clearMarkers
+  loadMaintenanceMarkers,
+  loadRouteBins,
+  clearMarkers,
+  clearAllLayers
 } from './map.js';
 
 // Global state to track what we are adding
@@ -31,13 +33,8 @@ window.currentAddMode = null;
 
 // --- MODIFIED: Map Layer Management ---
 function updateMapForTab(tabName) {
-  // Clear all markers
-  clearMarkers('households');
-  clearMarkers('bins');
-  clearMarkers('vehicles');
-  clearMarkers('maintenance'); // ADDED
-  clearMarkers('farHouseholds');
-  clearMarkers('suggested');
+  // Clear all layers
+  clearAllLayers();
 
   // Load markers for the selected tab
   switch (tabName) {
@@ -51,13 +48,28 @@ function updateMapForTab(tabName) {
       loadVehicleMarkers();
       break;
     case 'maintenance':
-      loadMaintenanceMarkers(); // Use new function
+      loadMaintenanceMarkers();
       break;
     case 'sensors':
     case 'collections':
       loadBinMarkers(); // Show all bins for these tabs
       break;
-    // Other tabs (users, routes, etc.) will show a clear map
+    
+    // --- THIS IS THE CHANGE ---
+    case 'analysis':
+      loadHouseholdMarkers(); // Show households
+      loadBinMarkers();       // Show bins
+      break;
+    // --- END OF CHANGE ---
+
+    // 'routes' tab now shows a clear map by default.
+    // Markers are loaded when a specific route is clicked.
+    case 'routes':
+    case 'users':
+    case 'waste-types':
+    case 'assignments':
+      // Do nothing, just show a clear map
+      break;
   }
 }
 
@@ -77,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tabId = tabName + '-tab';
       document.getElementById(tabId).classList.add('active');
 
-      // --- MODIFIED: Update map AND load list data ---
+      // Update map AND load list data
       updateMapForTab(tabName);
       
       // Load list data for the active tab
@@ -928,15 +940,67 @@ const routeFields = [
     ]}
 ];
 
+// --- NEW: Custom display function for routes ---
+function displayRoutesList(items, editCallback, deleteCallback) {
+  const container = document.getElementById('routes-list');
+  container.innerHTML = '';
+  
+  // Clear any existing "active" class
+  const clearActive = () => {
+    container.querySelectorAll('.list-item').forEach(el => el.classList.remove('active-route'));
+  };
+
+  items.forEach(item => {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'list-item route-list-item'; // Add a new class
+    itemDiv.dataset.routeId = item.id;
+
+    let content = `
+      <strong>Name:</strong> ${item.name}<br>
+      <strong>Creator:</strong> ${item.creator || 'N/A'}<br>
+      <strong>Bins:</strong> ${item.bins_in_route}<br>
+      <strong>Status:</strong> ${item.status}
+    `;
+    
+    // Create a view button
+    const viewBtn = document.createElement('button');
+    viewBtn.innerText = 'View on Map';
+    viewBtn.onclick = (e) => {
+      e.stopPropagation(); // Stop click from bubbling to edit/delete
+      clearActive();
+      itemDiv.classList.add('active-route');
+      loadRouteBins(item.id); // Load this route's bins
+    };
+
+    // Create edit/delete buttons
+    const editBtn = document.createElement('button');
+    editBtn.innerText = 'Edit';
+    editBtn.onclick = (e) => {
+      e.stopPropagation();
+      window[editCallback](item.id);
+    };
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerText = 'Delete';
+    deleteBtn.onclick = (e) => {
+      e.stopPropagation();
+      window[deleteCallback](item.id);
+    };
+    
+    itemDiv.innerHTML = content;
+    itemDiv.appendChild(viewBtn);
+    itemDiv.appendChild(editBtn);
+    itemDiv.appendChild(deleteBtn);
+    container.appendChild(itemDiv);
+  });
+}
+
+// --- MODIFIED: loadRoutes ---
 async function loadRoutes() {
   try {
     const routes = await getRoutes();
-    displayList('routes-list', routes, [
-      { name: 'name', label: 'Name' },
-      { name: 'creator', label: 'Creator' },
-      { name: 'bins_in_route', label: 'Bins' },
-      { name: 'status', label: 'Status' }
-    ], 'editRoute', 'deleteRoute');
+    // Use the new custom display function
+    displayRoutesList(routes, 'editRoute', 'deleteRoute');
   } catch (error) {
     console.error('Error loading routes:', error);
   }
@@ -1170,6 +1234,7 @@ window.deleteAssignment = async (id) => {
 // --- Analysis ---
 async function findFarHouseholds() {
   try {
+    // This function will now ADD red markers on top
     await window.showFarHouseholds(); 
   } catch (error) {
     console.error('Error finding far households:', error);
@@ -1178,6 +1243,7 @@ async function findFarHouseholds() {
 
 async function suggestNewBinsUI() {
   try {
+    // This function will now ADD suggested markers on top
     await window.suggestNewBins();
   } catch (error) {
     console.error('Error suggesting bins:', error);

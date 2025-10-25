@@ -20,12 +20,12 @@ const markers = {
   bins: [],
   vehicles: [],
   maintenance: [],
-  routeBins: [], // ADDED for maintenance bins
+  routeBins: [],
   farHouseholds: [],
   suggested: [],
 };
 
-// Helper to clear markers - NOW EXPORTED
+// Helper to clear markers
 export function clearMarkers(type) {
   if (markers[type]) {
     markers[type].forEach((m) => map.removeLayer(m));
@@ -34,18 +34,18 @@ export function clearMarkers(type) {
     console.warn(`Marker type "${type}" does not exist to clear.`);
   }
 }
-// --- NEW FUNCTION to clear all layers ---
+
+// Helper to clear all layers
 export function clearAllLayers() {
   Object.keys(markers).forEach(type => {
     clearMarkers(type);
   });
 }
 
-// --- NEW FUNCTION ---
 // Loads and displays the bins for a specific route
 export async function loadRouteBins(routeId) {
   clearAllLayers(); // Clear everything from the map
-  
+
   try {
     const bins = await getBinsForRoute(routeId);
     if (!bins || bins.length === 0) {
@@ -67,7 +67,7 @@ export async function loadRouteBins(routeId) {
           const marker = L.marker([coordinates[1], coordinates[0]], {
             icon: icon,
           }).bindPopup(`<b>Sequence: ${bin.sequence_order}</b><br>Bin ID: ${bin.bin_id}<br>Status: ${bin.status}`);
-          
+
           marker.addTo(map);
           markers.routeBins.push(marker);
           markerGroup.push([coordinates[1], coordinates[0]]);
@@ -87,6 +87,8 @@ export async function loadRouteBins(routeId) {
     alert(`Could not load bins for route ${routeId}.`);
   }
 }
+
+
 // Load households
 export async function loadHouseholdMarkers() {
   clearMarkers("households");
@@ -131,14 +133,13 @@ export async function loadBinMarkers() {
   });
 }
 
-// --- NEW FUNCTION ---
 // Load ONLY bins that are marked for maintenance
 export async function loadMaintenanceMarkers() {
   clearMarkers("maintenance");
   const allBins = await getBins(); // Get all bins
-  
+
   // Filter for bins in maintenance
-  const maintBins = allBins.filter(b => b.status === 'maintenance'); 
+  const maintBins = allBins.filter(b => b.status === 'maintenance');
 
   maintBins.forEach((b) => {
     if (b.location) {
@@ -185,45 +186,83 @@ export async function loadVehicleMarkers() {
 }
 
 
-// Highlight far households
+// --- MODIFIED: Highlight far households ---
 export async function showFarHouseholds() {
-  clearMarkers("farHouseholds");
-  const far = await getFarHouseholds();
-  far.forEach((h) => {
-    if (h.location) {
-      try {
-        const { coordinates } = JSON.parse(h.location);
-        const marker = L.circleMarker([coordinates[1], coordinates[0]], {
-          color: "red",
-          radius: 6,
-        }).bindPopup(`<b>Far Household:</b> ${h.name}`);
-        marker.addTo(map);
-        markers.farHouseholds.push(marker);
-      } catch (e) {
-        console.error("Invalid far household location:", h.location);
-      }
+  clearAllLayers(); // Clear everything first
+  // clearMarkers("farHouseholds"); // No longer needed, clearAllLayers does it
+
+  try {
+    const far = await getFarHouseholds();
+    if (!far || far.length === 0) {
+      alert("No far households found.");
+      return;
     }
-  });
+
+    const markerGroup = []; // To zoom map
+    far.forEach((h) => {
+      if (h.location) {
+        try {
+          const { coordinates } = JSON.parse(h.location);
+          const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+            color: "red",
+            fillColor: "#f03",
+            fillOpacity: 0.8,
+            radius: 6,
+          }).bindPopup(`<b>Far Household:</b> ${h.name}`);
+          marker.addTo(map);
+          markers.farHouseholds.push(marker);
+          markerGroup.push([coordinates[1], coordinates[0]]);
+        } catch (e) {
+          console.error("Invalid far household location:", h.location);
+        }
+      }
+    });
+
+    // Zoom map to fit the far households
+    if (markerGroup.length > 0) {
+      map.fitBounds(markerGroup);
+    }
+  } catch (err) {
+    console.error(`Error fetching far households: ${err.message}`);
+    alert('Could not fetch far households.');
+  }
 }
 
-// Suggest new bins
+// --- MODIFIED: Suggest new bins ---
 export async function suggestNewBins() {
-  clearMarkers("suggested");
-  const suggestions = await getSuggestedBins();
+  clearAllLayers(); // Clear everything first
+  // clearMarkers("suggested"); // No longer needed
 
-  suggestions.forEach((s) => {
-    if (!s.location) return; 
-
-    try {
-      const { coordinates } = JSON.parse(s.location);
-      const marker = L.marker([coordinates[1], coordinates[0]])
-        .addTo(map)
-        .bindPopup(`<b>Suggested Bin</b><br>Reason: ${s.reason}`);
-      markers.suggested.push(marker);
-    } catch (e) {
-      console.error("Invalid suggested bin location:", s.location);
+  try {
+    const suggestions = await getSuggestedBins();
+    if (!suggestions || suggestions.length === 0) {
+      alert("No new bin suggestions available.");
+      return;
     }
-  });
+
+    const markerGroup = []; // To zoom map
+    suggestions.forEach((s) => {
+      if (!s.location) return;
+
+      try {
+        const { coordinates } = JSON.parse(s.location);
+        const marker = L.marker([coordinates[1], coordinates[0]])
+          .addTo(map)
+          .bindPopup(`<b>Suggested Bin</b><br>Reason: ${s.reason}`);
+        markers.suggested.push(marker);
+        markerGroup.push([coordinates[1], coordinates[0]]);
+      } catch (e) {
+        console.error("Invalid suggested bin location:", s.location);
+      }
+    });
+    // Zoom map to fit the suggestions
+    if (markerGroup.length > 0) {
+      map.fitBounds(markerGroup);
+    }
+  } catch (err) {
+    console.error(`Error fetching suggested bins: ${err.message}`);
+    alert('Could not fetch suggested bins.');
+  }
 }
 
 /**
@@ -266,5 +305,6 @@ export function addMapMarker(type, entity) {
 }
 
 // Export functions for use in ui.js
+// Make sure these are on window scope as ui.js expects them there
 window.showFarHouseholds = showFarHouseholds;
 window.suggestNewBins = suggestNewBins;
